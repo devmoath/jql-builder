@@ -1,0 +1,41 @@
+{
+    "name": "devmoath/jql-builder",
+    "description": "Simple JQL builder for Jira search",
+    "keywords": [
+        "devmoath",
+        "jql-builder"
+    ],
+    "homepage": "https://github.com/devmoath/jql-builder",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Moath",
+            "email": "moath.alhajrii@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "DevMoath\\JqlBuilder\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DevMoath\\JqlBuilder\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
