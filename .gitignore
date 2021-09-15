@@ -1,4 +1,7 @@
 .idea
-vendor
-composer.lock
 *.cache
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+/.idea
