@@ -6,6 +6,10 @@
         "jql-builder"
     ],
     "homepage": "https://github.com/devmoath/jql-builder",
+    "support": {
+        "issues": "https://github.com/devmoath/jql-builder/issues",
+        "source": "https://github.com/devmoath/jql-builder"
+    },
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -37,5 +41,7 @@
     },
     "config": {
         "sort-packages": true
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
