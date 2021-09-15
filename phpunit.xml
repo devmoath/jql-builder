@@ -11,7 +11,7 @@
          verbose="true">
     <testsuites>
         <testsuite name="JQL Builder Test Suite">
-            <directory>tests</directory>
+            <directory suffix="Test.php">tests</directory>
         </testsuite>
     </testsuites>
     <coverage>
