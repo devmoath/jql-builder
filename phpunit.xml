@@ -10,7 +10,7 @@
          stopOnFailure="false"
          verbose="true">
     <testsuites>
-        <testsuite name="Test Suite">
+        <testsuite name="JQL Builder Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
