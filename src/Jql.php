@@ -12,11 +12,11 @@ class Jql implements \Stringable
 
     public const GREATER_THAN = '>';
 
-    public const LOWER_THAN = '<';
+    public const LESS_THAN = '<';
 
     public const GREATER_THAN_OR_EQUAL = '>=';
 
-    public const LOWER_THAN_OR_EQUAL = '<=';
+    public const LESS_THAN_OR_EQUAL = '<=';
 
     public const LIKE = '~';
 
@@ -30,7 +30,9 @@ class Jql implements \Stringable
 
     public const IS_NOT = 'is not';
 
-    public const AND = 'AND';
+    public const AND = 'and';
+
+    public const OR = 'or';
 
     public const WAS = 'was';
 
@@ -47,6 +49,10 @@ class Jql implements \Stringable
     public const DESC = 'desc';
 
     public const ASC = 'asc';
+
+    public const EMPTY = 'empty';
+
+    public const NULL = 'null';
 
     private string $project = '';
 
