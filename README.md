@@ -1,5 +1,9 @@
 # Jql Builder
 
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/devmoath/jql-builder.svg?style=flat-square)](https://packagist.org/packages/devmoath/jql-builder)
+![Tests](https://github.com/devmoath/jql-builder/workflows/Tests/badge.svg)
+[![Total Downloads](https://img.shields.io/packagist/dt/devmoath/jql-builder.svg?style=flat-square)](https://packagist.org/packages/devmoath/jql-builder)
+
 Simple JQL builder for Jira search
 
 ## Installation
