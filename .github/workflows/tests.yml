@@ -3,7 +3,47 @@ name: Tests
 on: [ push, pull_request ]
 
 jobs:
-    test:
+    phpstan:
+        runs-on: ubuntu-latest
+        name: PHPstan
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.0
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+                    coverage: none
+
+            -   name: Install dependencies
+                run: composer i --prefer-dist --no-interaction
+
+            -   name: Execute Static Tests
+                run: composer phpstan
+
+    php-cs-fixer:
+        runs-on: ubuntu-latest
+        name: PHP CS Fixer
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.0
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+                    coverage: none
+
+            -   name: Install dependencies
+                run: composer i --prefer-dist --no-interaction
+
+            -   name: Execute Code Style Tests
+                run: composer phpstan
+
+    phpunit:
         runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: true
