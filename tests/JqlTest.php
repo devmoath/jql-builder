@@ -33,4 +33,14 @@ class JqlTest extends TestCase
         $this->assertSame("project = 'MY PROJECT'", $testcase);
         $this->assertSame("", $testcase2);
     }
+
+    /** @test */
+    public function it_can_generate_simple_jql_using_or_operator(): void
+    {
+        $testcase = (string) Jql::query()
+            ->whereProject('MY PROJECT')
+            ->orWhereType('support', Jql::NOT_EQUAL);
+
+        $this->assertSame("project = 'MY PROJECT' or type != 'support'", $testcase);
+    }
 }

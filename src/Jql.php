@@ -54,15 +54,7 @@ class Jql implements \Stringable
 
     public const NULL = 'null';
 
-    private string $project = '';
-
-    private string $type = '';
-
-    private string $issueType = '';
-
-    private array $custom = [];
-
-    private string $status = '';
+    private string $query = '';
 
     public static function query(): self
     {
@@ -71,39 +63,76 @@ class Jql implements \Stringable
 
     public function whereProject(string|int $value, string $operator = self::EQUAL): self
     {
-        $this->project = "project $operator '$value'";
+        return tap($this, function () use ($value, $operator) {
+            $this->appendQuery("project $operator '$value'");
+        });
+    }
 
-        return $this;
+    public function orWhereProject(string|int $value, string $operator = self::EQUAL): self
+    {
+        return tap($this, function () use ($value, $operator) {
+            $this->appendQuery("project $operator '$value'", self::OR);
+        });
     }
 
     public function whereType(string|int $value, string $operator = self::EQUAL): self
     {
-        $this->type = "type $operator '$value'";
+        return tap($this, function () use ($value, $operator) {
+            $this->appendQuery("type $operator '$value'");
+        });
+    }
 
-        return $this;
+    public function orWhereType(string|int $value, string $operator = self::EQUAL): self
+    {
+        return tap($this, function () use ($value, $operator) {
+            $this->appendQuery("type $operator '$value'", self::OR);
+        });
     }
 
     public function whereIssueType(string|int $value, string $operator = self::EQUAL): self
     {
-        $this->issueType = "issuetype $operator '$value'";
+        return tap($this, function () use ($value, $operator) {
+            $this->appendQuery("issuetype $operator '$value'");
+        });
+    }
 
-        return $this;
+    public function orWhereIssueType(string|int $value, string $operator = self::EQUAL): self
+    {
+        return tap($this, function () use ($value, $operator) {
+            $this->appendQuery("issuetype $operator '$value'", self::OR);
+        });
     }
 
     public function whereCustom(string $name, string|int $value, string $operator = self::LIKE): self
     {
-        $this->custom[] = "'$name' $operator '$value'";
+        return tap($this, function () use ($name, $operator, $value) {
+            $this->appendQuery("'$name' $operator '$value'");
+        });
+    }
 
-        return $this;
+    public function orWhereCustom(string $name, string|int $value, string $operator = self::LIKE): self
+    {
+        return tap($this, function () use ($name, $operator, $value) {
+            $this->appendQuery("'$name' $operator '$value'", self::OR);
+        });
     }
 
     public function whereStatus(array|string $value, string $operator = self::IN): self
     {
         $values = implode("', '", is_array($value) ? $value : [$value]);
 
-        $this->status = "status $operator ('$values')";
+        return tap($this, function () use ($values, $operator) {
+            $this->appendQuery("status $operator ('$values')");
+        });
+    }
 
-        return $this;
+    public function orWhereStatus(array|string $value, string $operator = self::IN): self
+    {
+        $values = implode("', '", is_array($value) ? $value : [$value]);
+
+        return tap($this, function () use ($values, $operator) {
+            $this->appendQuery("status $operator ('$values')", self::OR);
+        });
     }
 
     public function when(mixed $value, callable $callback): self
@@ -124,19 +153,22 @@ class Jql implements \Stringable
         return $this;
     }
 
+    public function getQuery(): string
+    {
+        return trim($this->query);
+    }
+
     public function __toString(): string
     {
-        return trim(
-            implode(
-                ' '.self::AND.' ',
-                array_filter([
-                    $this->project,
-                    $this->type,
-                    $this->issueType,
-                    $this->status,
-                    ...$this->custom,
-                ])
-            )
-        );
+        return $this->getQuery();
+    }
+
+    private function appendQuery(string $expression, string $operator = self::AND)
+    {
+        if (empty($this->query)) {
+            $this->query = $expression;
+        } else {
+            $this->query .= " $operator $expression";
+        }
     }
 }
