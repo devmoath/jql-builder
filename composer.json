@@ -24,6 +24,7 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.1",
+        "phpstan/phpstan": "^0.12.99",
         "phpunit/phpunit": "^9.5.9"
     },
     "autoload": {
@@ -37,10 +38,11 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage",
         "test-lint": "php-cs-fixer fix --dry-run",
-        "lint": "php-cs-fixer fix"
+        "lint": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse"
     },
     "config": {
         "sort-packages": true
