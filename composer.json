@@ -42,7 +42,7 @@
     },
     "scripts": {
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html coverage",
+        "test-coverage": "XDEBUG_MODE=coverage phpunit --coverage-html coverage",
         "test-lint": "php-cs-fixer fix --dry-run",
         "lint": "php-cs-fixer fix",
         "phpstan": "phpstan analyse"
