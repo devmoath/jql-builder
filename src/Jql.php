@@ -100,6 +100,24 @@ class Jql implements \Stringable
         return $this;
     }
 
+    public function when(mixed $value, callable $callback): self
+    {
+        if ($value) {
+            return $callback($this, $value);
+        }
+
+        return $this;
+    }
+
+    public function whenNot(mixed $value, callable $callback): self
+    {
+        if (! $value) {
+            return $callback($this, $value);
+        }
+
+        return $this;
+    }
+
     public function __toString(): string
     {
         return trim(

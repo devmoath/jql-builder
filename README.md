@@ -13,9 +13,27 @@ composer require devmoath/jql-builder
 ```php
 use DevMoath\JqlBuilder\Jql;
 
-$example = (string) Jql::query()->whereProject('MY PROJECT'); // => "project = 'MY PROJECT'"
+$example = (string) Jql::query()->whereProject('MY PROJECT');
 
-$example = (string) Jql::query()->whereProject('MY PROJECT')->whereStatus(['wip', 'created']); // => "project = 'MY PROJECT' AND status in ('wip', 'created')"
+echo $example; // "project = 'MY PROJECT'"
+
+$example = (string) Jql::query()->whereProject('MY PROJECT')->whereStatus(['wip', 'created']);
+
+echo $example; // "project = 'MY PROJECT' AND status in ('wip', 'created')"
+
+$example = (string) Jql::query()->when('MY PROJECT', function (Jql $builder, $value) {
+    return $builder->whereProject($value);
+});
+
+echo $example; // "project = 'MY PROJECT'"
+
+$testcase2 = (string) Jql::query()->when('', function (Jql $builder, $value) {
+    return $builder->whereProject($value);
+});
+
+echo $example; // ""
+
+// more examples in the way.
 ```
 
 ## Testing
