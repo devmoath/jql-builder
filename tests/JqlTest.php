@@ -14,7 +14,7 @@ class JqlTest extends TestCase
         $testcase2 = (string) Jql::query()->whereProject('MY PROJECT')->whereStatus(['wip', 'created']);
 
         $this->assertSame("project = 'MY PROJECT'", $testcase);
-        $this->assertSame("project = 'MY PROJECT' AND status in ('wip', 'created')", $testcase2);
+        $this->assertSame("project = 'MY PROJECT' and status in ('wip', 'created')", $testcase2);
     }
 
     /** @test */
