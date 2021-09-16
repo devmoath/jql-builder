@@ -41,7 +41,7 @@ jobs:
                 run: composer i --prefer-dist --no-interaction
 
             -   name: Execute Code Style Tests
-                run: composer phpstan
+                run: composer test-php-cs-fixer
 
     phpunit:
         runs-on: ${{ matrix.os }}
