@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DevMoath\JqlBuilder;
 
-class Jql implements \Stringable
+final class Jql implements \Stringable
 {
     public const EQUAL = '=';
 
