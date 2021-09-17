@@ -8,44 +8,46 @@ use PHPUnit\Framework\TestCase;
 class JqlTest extends TestCase
 {
     /** @test */
-    public function it_can_generate_simple_jql(): void
+    public function it_can_generate_query_with_single_condition(): void
     {
-        $testcase = (string) Jql::query()->whereProject('MY PROJECT');
-        $testcase2 = (string) Jql::query()->whereProject('MY PROJECT')->whereStatus(['wip', 'created'], Jql::IN);
-        $testcase3 = (string) Jql::query()
+        $query = Jql::query()
             ->whereProject('MY PROJECT')
+            ->getQuery();
+
+        self::assertSame("project = 'MY PROJECT'", $query);
+    }
+
+    /** @test */
+    public function it_can_generate_query_with_many_conditions(): void
+    {
+        $query = Jql::query()
+            ->whereProject('MY PROJECT')
+            ->whereIssueType('support')
+            ->whereStatus(['wip', 'created'], Jql::IN)
+            ->getQuery();
+
+        self::assertSame("project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created')", $query);
+    }
+
+    /** @test */
+    public function it_can_generate_query_with_custom_filed_conditions(): void
+    {
+        $query = Jql::query()
             ->where('customfild_111', Jql::EQUAL, 'value')
-            ->whereStatus(['wip', 'created'], Jql::IN);
+            ->where('customfild_222', Jql::EQUAL, 'value')
+            ->getQuery();
 
-        $this->assertSame("project = 'MY PROJECT'", $testcase);
-        $this->assertSame("project = 'MY PROJECT' and status in ('wip', 'created')", $testcase2);
-        $this->assertSame("project = 'MY PROJECT' and customfild_111 = 'value' and status in ('wip', 'created')", $testcase3);
+        self::assertSame("customfild_111 = 'value' and customfild_222 = 'value'", $query);
     }
 
     /** @test */
-    public function it_can_generate_simple_jql_using_condition(): void
+    public function it_can_generate_query_conditions_based_on_your_condition(): void
     {
-        $projectName = 'MY PROJECT';
-        $emptyProjectName = '';
+        $query = Jql::query()
+            ->when('MY PROJECT', fn (Jql $builder, $value) => $builder->whereProject($value))
+            ->when('', fn (Jql $builder, $value) => $builder->whereIssueType($value))
+            ->getQuery();
 
-        $testcase = (string) Jql::query()->when($projectName, function (Jql $builder, $value) {
-            return $builder->whereProject($value);
-        });
-        $testcase2 = (string) Jql::query()->when($emptyProjectName, function (Jql $builder, $value) {
-            return $builder->whereProject($value);
-        });
-
-        $this->assertSame("project = 'MY PROJECT'", $testcase);
-        $this->assertSame("", $testcase2);
-    }
-
-    /** @test */
-    public function it_can_generate_simple_jql_using_or_operator(): void
-    {
-        $testcase = (string) Jql::query()
-            ->whereProject('MY PROJECT')
-            ->orWhereType('support', Jql::NOT_EQUAL);
-
-        $this->assertSame("project = 'MY PROJECT' or type != 'support'", $testcase);
+        self::assertSame("project = 'MY PROJECT'", $query);
     }
 }
