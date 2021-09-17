@@ -11,10 +11,15 @@ class JqlTest extends TestCase
     public function it_can_generate_simple_jql(): void
     {
         $testcase = (string) Jql::query()->whereProject('MY PROJECT');
-        $testcase2 = (string) Jql::query()->whereProject('MY PROJECT')->whereStatus(['wip', 'created']);
+        $testcase2 = (string) Jql::query()->whereProject('MY PROJECT')->whereStatus(['wip', 'created'], Jql::IN);
+        $testcase3 = (string) Jql::query()
+            ->whereProject('MY PROJECT')
+            ->where('customfild_111', Jql::EQUAL, 'value')
+            ->whereStatus(['wip', 'created'], Jql::IN);
 
         $this->assertSame("project = 'MY PROJECT'", $testcase);
         $this->assertSame("project = 'MY PROJECT' and status in ('wip', 'created')", $testcase2);
+        $this->assertSame("project = 'MY PROJECT' and customfild_111 = 'value' and status in ('wip', 'created')", $testcase3);
     }
 
     /** @test */
