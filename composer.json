@@ -3,7 +3,12 @@
     "description": "Simple JQL builder for Jira search",
     "keywords": [
         "devmoath",
-        "jql-builder"
+        "jql-builder",
+        "php",
+        "builder",
+        "jira",
+        "query-builder",
+        "jql"
     ],
     "homepage": "https://github.com/devmoath/jql-builder",
     "support": {
