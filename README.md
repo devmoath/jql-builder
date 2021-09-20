@@ -53,13 +53,6 @@ generate query conditions based on your condition:
 Also you can add macro functions as well:
 
 ```php
-\DevMoath\JqlBuilder\Jql::macro('whereCustom', function ($value) {
-    /** @var \DevMoath\JqlBuilder\Jql $this */
-    $this->where('custom', \DevMoath\JqlBuilder\Jql::EQUAL, $value);
-});
-
-\DevMoath\JqlBuilder\Jql::query()->whereCustom('1');
-
 $builder = new \DevMoath\JqlBuilder\Jql;
 
 $builder::macro('whereCustom', function ($value) {
