@@ -54,7 +54,7 @@ class JqlTest extends TestCase
     /** @test */
     public function it_can_add_macro(): void
     {
-        $builder = new Jql;
+        $builder = new Jql();
 
         $builder::macro('whereCustom', function ($value) {
             /** @var Jql $this */
