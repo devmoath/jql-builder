@@ -6,6 +6,8 @@ namespace DevMoath\JqlBuilder;
 
 final class Jql implements \Stringable
 {
+    use \Spatie\Macroable\Macroable;
+
     public const EQUAL = '=';
 
     public const NOT_EQUAL = '!=';

@@ -50,4 +50,20 @@ class JqlTest extends TestCase
 
         self::assertSame("project = 'MY PROJECT'", $query);
     }
+
+    /** @test */
+    public function it_can_add_macro(): void
+    {
+        $builder = new Jql;
+
+        $builder::macro('whereCustom', function ($value) {
+            /** @var Jql $this */
+            return $this->where('custom', Jql::EQUAL, $value);
+        });
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        $query = $builder->whereCustom('1')->getQuery();
+
+        self::assertSame("custom = '1'", $query);
+    }
 }
