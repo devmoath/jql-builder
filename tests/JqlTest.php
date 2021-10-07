@@ -44,8 +44,8 @@ class JqlTest extends TestCase
     public function it_can_generate_query_conditions_based_on_your_condition(): void
     {
         $query = Jql::query()
-            ->when('MY PROJECT', fn (Jql $builder, $value) => $builder->whereProject($value))
-            ->when('', fn (Jql $builder, $value) => $builder->whereIssueType($value))
+            ->when('MY PROJECT', fn(Jql $builder, $value) => $builder->whereProject($value))
+            ->when('', fn(Jql $builder, $value) => $builder->whereIssueType($value))
             ->getQuery();
 
         self::assertSame("project = 'MY PROJECT'", $query);
@@ -56,7 +56,7 @@ class JqlTest extends TestCase
     {
         $builder = new Jql();
 
-        $builder::macro('whereCustom', function ($value) {
+        $builder::macro('whereCustom', function($value) {
             /** @var Jql $this */
             return $this->where('custom', Jql::EQUAL, $value);
         });

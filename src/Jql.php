@@ -78,7 +78,7 @@ final class Jql implements \Stringable
 
     public function orWhere(string $column, string $operator, mixed $value): self
     {
-        return tap($this, fn () => $this->where($column, $operator, $value, self::OR));
+        return tap($this, fn() => $this->where($column, $operator, $value, self::OR));
     }
 
     public function quote(string $operator, mixed $value): string
@@ -96,48 +96,53 @@ final class Jql implements \Stringable
     public function invalidBoolean(mixed $boolean): void
     {
         if (! in_array($boolean, [self::AND, self::OR])) {
-            throw new \InvalidArgumentException(sprintf("Illegal boolean [%s] value. only [%s, %s] is acceptable", $boolean, self::AND, self::OR));
+            throw new \InvalidArgumentException(sprintf(
+                "Illegal boolean [%s] value. only [%s, %s] is acceptable",
+                $boolean,
+                self::AND,
+                self::OR
+            ));
         }
     }
 
     public function whereProject(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->where('project', $operator, $value));
+        return tap($this, fn() => $this->where('project', $operator, $value));
     }
 
     public function orWhereProject(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->orWhere('project', $operator, $value));
+        return tap($this, fn() => $this->orWhere('project', $operator, $value));
     }
 
     public function whereType(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->where('type', $operator, $value));
+        return tap($this, fn() => $this->where('type', $operator, $value));
     }
 
     public function orWhereType(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->orWhere('type', $operator, $value));
+        return tap($this, fn() => $this->orWhere('type', $operator, $value));
     }
 
     public function whereIssueType(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->where('issuetype', $operator, $value));
+        return tap($this, fn() => $this->where('issuetype', $operator, $value));
     }
 
     public function orWhereIssueType(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->orWhere('issuetype', $operator, $value));
+        return tap($this, fn() => $this->orWhere('issuetype', $operator, $value));
     }
 
     public function whereStatus(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->where('status', $operator, $value));
+        return tap($this, fn() => $this->where('status', $operator, $value));
     }
 
     public function orWhereStatus(mixed $value, string $operator = self::EQUAL): self
     {
-        return tap($this, fn () => $this->orWhere('status', $operator, $value));
+        return tap($this, fn() => $this->orWhere('status', $operator, $value));
     }
 
     public function when(mixed $value, callable $callback): self
