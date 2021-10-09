@@ -67,7 +67,7 @@ final class Jql implements \Stringable
     {
         $this->invalidBoolean($boolean);
 
-        return tap($this, function () use ($column, $operator, $value, $boolean) {
+        return tap($this, function() use ($column, $operator, $value, $boolean) {
             if (empty($this->query)) {
                 $this->query = "$column $operator {$this->quote($operator, $value)}";
             } else {
