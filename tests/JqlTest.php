@@ -30,6 +30,19 @@ class JqlTest extends TestCase
     }
 
     /** @test */
+    public function it_can_generate_query_with_many_conditions_and_order_by(): void
+    {
+        $query = Jql::query()
+            ->whereProject('MY PROJECT')
+            ->whereIssueType('support')
+            ->whereStatus(['wip', 'created'], Jql::IN)
+            ->orderBy('created', Jql::ASC)
+            ->getQuery();
+
+        self::assertSame("project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc", $query);
+    }
+
+    /** @test */
     public function it_can_generate_query_with_custom_filed_conditions(): void
     {
         $query = Jql::query()

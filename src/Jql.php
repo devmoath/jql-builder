@@ -161,6 +161,11 @@ final class Jql implements \Stringable
         return $this;
     }
 
+    public function orderBy(string $column, string $direction): self
+    {
+        return tap($this, fn() => $this->appendQuery(self::ORDER_BY." $column $direction"));
+    }
+
     public function getQuery(): string
     {
         return trim($this->query);
@@ -171,7 +176,7 @@ final class Jql implements \Stringable
         if (empty($this->query)) {
             $this->query = $query;
         } else {
-            $this->query .= " $boolean $query";
+            $this->query .= " ".trim("$boolean $query");
         }
     }
 

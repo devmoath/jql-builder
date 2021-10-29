@@ -14,7 +14,7 @@ composer require devmoath/jql-builder
 
 ## Usage
 
-Generate query with one condition: 
+Generate query with one condition:
 
 ```php
 \DevMoath\JqlBuilder\Jql::query()
@@ -30,6 +30,17 @@ Generate query with many conditions:
     ->whereIssueType('support')
     ->whereStatus(['wip', 'created'], Jql::IN)
     ->getQuery(); // "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created')"
+```
+
+Generate query with many conditions and order by:
+
+```php
+\DevMoath\JqlBuilder\Jql::query()
+    ->whereProject('MY PROJECT')
+    ->whereIssueType('support')
+    ->whereStatus(['wip', 'created'], Jql::IN)
+    ->orderBy('created', Jql::ASC)
+    ->getQuery(); // "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc"
 ```
 
 generate query with custom filed conditions:
@@ -50,7 +61,7 @@ generate query conditions based on your condition:
     ->getQuery(); // "project = 'MY PROJECT'"
 ```
 
-Also you can add macro functions as well:
+Also, you can add macro functions as well:
 
 ```php
 $builder = new \DevMoath\JqlBuilder\Jql;
