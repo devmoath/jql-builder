@@ -1,11 +1,18 @@
 <?php
 
-$finder = \Symfony\Component\Finder\Finder::create()->in([
-    __DIR__.'/src',
-    __DIR__.'/tests',
-])->name('*.php')->ignoreDotFiles(true)->ignoreVCS(true);
+use PhpCsFixer\Config;
+use Symfony\Component\Finder\Finder;
 
-return (new PhpCsFixer\Config())->setRules([
+$finder = Finder::create()
+    ->in([
+        __DIR__.'/src',
+        __DIR__.'/tests',
+    ])
+    ->name('*.php')
+    ->ignoreDotFiles(true)
+    ->ignoreVCS(true);
+
+return (new Config())->setRules([
     '@PSR2' => true,
-    'function_declaration' => ['closure_function_spacing' => 'none']
+    'function_declaration' => ['closure_function_spacing' => 'none'],
 ])->setFinder($finder);
