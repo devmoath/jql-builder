@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace DevMoath\JqlBuilder;
 
+use Spatie\Macroable\Macroable;
+
 final class Jql implements \Stringable
 {
-    use \Spatie\Macroable\Macroable;
+    use Macroable;
 
     public const EQUAL = '=';
 
