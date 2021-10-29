@@ -69,13 +69,7 @@ final class Jql implements \Stringable
     {
         $this->invalidBoolean($boolean);
 
-        return tap($this, function() use ($column, $operator, $value, $boolean) {
-            if (empty($this->query)) {
-                $this->query = "$column $operator {$this->quote($operator, $value)}";
-            } else {
-                $this->query .= " $boolean $column $operator {$this->quote($operator, $value)}";
-            }
-        });
+        return tap($this, fn() => $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean));
     }
 
     public function orWhere(string $column, string $operator, mixed $value): self
@@ -170,6 +164,15 @@ final class Jql implements \Stringable
     public function getQuery(): string
     {
         return trim($this->query);
+    }
+
+    public function appendQuery(string $query, string $boolean = ''): void
+    {
+        if (empty($this->query)) {
+            $this->query = $query;
+        } else {
+            $this->query .= " $boolean $query";
+        }
     }
 
     public function __toString(): string
