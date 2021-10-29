@@ -149,6 +149,8 @@ final class Jql implements \Stringable
 
     public function when(mixed $value, callable $callback): self
     {
+        $value = value($value, $this);
+
         if ($value) {
             return $callback($this, $value);
         }

@@ -19,3 +19,10 @@ if (! function_exists('array_wrap')) {
         return is_array($value) ? $value : [$value];
     }
 }
+
+if (! function_exists('value')) {
+    function value(mixed $value, mixed ...$args): mixed
+    {
+        return $value instanceof Closure ? $value(...$args) : $value;
+    }
+}

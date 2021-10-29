@@ -45,7 +45,7 @@ class JqlTest extends TestCase
     {
         $query = Jql::query()
             ->when('MY PROJECT', fn(Jql $builder, $value) => $builder->whereProject($value))
-            ->when('', fn(Jql $builder, $value) => $builder->whereIssueType($value))
+            ->when(fn(Jql $builder) => false, fn(Jql $builder, $value) => $builder->whereIssueType($value))
             ->getQuery();
 
         self::assertSame("project = 'MY PROJECT'", $query);

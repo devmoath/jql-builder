@@ -46,7 +46,7 @@ generate query conditions based on your condition:
 ```php
 \DevMoath\JqlBuilder\Jql::query()
     ->when('MY PROJECT', fn (\DevMoath\JqlBuilder\Jql $builder, $value) => $builder->whereProject($value))
-    ->when('', fn (\DevMoath\JqlBuilder\Jql $builder, $value) => $builder->whereIssueType($value))
+    ->when(fn(\DevMoath\JqlBuilder\Jql $builder) => false, fn(\DevMoath\JqlBuilder\Jql $builder, $value) => $builder->whereIssueType($value))
     ->getQuery(); // "project = 'MY PROJECT'"
 ```
 
