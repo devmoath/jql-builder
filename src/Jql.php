@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DevMoath\JqlBuilder;
 
+use InvalidArgumentException;
 use Spatie\Macroable\Macroable;
 
 final class Jql implements \Stringable
@@ -86,21 +87,6 @@ final class Jql implements \Stringable
         return "'$value'";
     }
 
-    /**
-     * @throws \InvalidArgumentException
-     */
-    public function invalidBoolean(mixed $boolean): void
-    {
-        if (! in_array($boolean, [self::AND, self::OR])) {
-            throw new \InvalidArgumentException(sprintf(
-                "Illegal boolean [%s] value. only [%s, %s] is acceptable",
-                $boolean,
-                self::AND,
-                self::OR
-            ));
-        }
-    }
-
     public function whereProject(mixed $value, string $operator = self::EQUAL): self
     {
         return tap($this, fn() => $this->where('project', $operator, $value));
@@ -171,7 +157,12 @@ final class Jql implements \Stringable
         return trim($this->query);
     }
 
-    public function appendQuery(string $query, string $boolean = ''): void
+    public function __toString(): string
+    {
+        return $this->getQuery();
+    }
+
+    private function appendQuery(string $query, string $boolean = ''): void
     {
         if (empty($this->query)) {
             $this->query = $query;
@@ -180,8 +171,18 @@ final class Jql implements \Stringable
         }
     }
 
-    public function __toString(): string
+    /**
+     * @throws \InvalidArgumentException
+     */
+    private function invalidBoolean(mixed $boolean): void
     {
-        return $this->getQuery();
+        if (! in_array($boolean, [self::AND, self::OR])) {
+            throw new InvalidArgumentException(sprintf(
+                "Illegal boolean [%s] value. only [%s, %s] is acceptable",
+                $boolean,
+                self::AND,
+                self::OR
+            ));
+        }
     }
 }
