@@ -78,15 +78,6 @@ final class Jql implements \Stringable
         return tap($this, fn() => $this->where($column, $operator, $value, self::OR));
     }
 
-    public function quote(string $operator, mixed $value): string
-    {
-        if (in_array($operator, [self::IN, self::NOT_IN, self::WAS_IN, self::WAS_NOT_IN])) {
-            return sprintf("('%s')", implode("', '", array_wrap($value)));
-        }
-
-        return "'$value'";
-    }
-
     public function whereProject(mixed $value, string $operator = self::EQUAL): self
     {
         return tap($this, fn() => $this->where('project', $operator, $value));
@@ -175,6 +166,15 @@ final class Jql implements \Stringable
     public function __toString(): string
     {
         return $this->getQuery();
+    }
+
+    private function quote(string $operator, mixed $value): string
+    {
+        if (in_array($operator, [self::IN, self::NOT_IN, self::WAS_IN, self::WAS_NOT_IN])) {
+            return sprintf("('%s')", implode("', '", array_wrap($value)));
+        }
+
+        return "'$value'";
     }
 
     private function appendQuery(string $query, string $boolean = ''): void
