@@ -152,6 +152,11 @@ final class Jql implements \Stringable
         return tap($this, fn() => $this->appendQuery(self::ORDER_BY." $column $direction"));
     }
 
+    public function rawQuery(string $query): self
+    {
+        return tap($this, fn() => $this->appendQuery($query));
+    }
+
     public function getQuery(): string
     {
         return trim($this->query);

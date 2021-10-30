@@ -65,6 +65,16 @@ class JqlTest extends TestCase
     }
 
     /** @test */
+    public function it_can_generate_query_using_raw_query(): void
+    {
+        $query = Jql::query()
+            ->rawQuery("project = 'MY PROJECT' order by created asc")
+            ->getQuery();
+
+        self::assertSame("project = 'MY PROJECT' order by created asc", $query);
+    }
+
+    /** @test */
     public function it_can_add_macro(): void
     {
         $builder = new Jql();

@@ -61,6 +61,14 @@ generate query conditions based on your condition:
     ->getQuery(); // "project = 'MY PROJECT'"
 ```
 
+generate query using raw query:
+
+```php
+\DevMoath\JqlBuilder\Jql::query()
+    ->rawQuery("project = 'MY PROJECT' order by created asc")
+    ->getQuery(); // "project = 'MY PROJECT' order by created asc"
+```
+
 Also, you can add macro functions as well:
 
 ```php
