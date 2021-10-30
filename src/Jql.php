@@ -97,6 +97,16 @@ final class Jql implements \Stringable
         return tap($this, fn() => $this->orWhere('project', $operator, $value));
     }
 
+    public function whereSummary(mixed $value, string $operator = self::EQUAL): self
+    {
+        return tap($this, fn() => $this->where('summary', $operator, $value));
+    }
+
+    public function orWhereSummary(mixed $value, string $operator = self::EQUAL): self
+    {
+        return tap($this, fn() => $this->orWhere('summary', $operator, $value));
+    }
+
     public function whereType(mixed $value, string $operator = self::EQUAL): self
     {
         return tap($this, fn() => $this->where('type', $operator, $value));
