@@ -2,6 +2,10 @@
 
 ## [Unreleased](https://github.com/devmoath/jql-builder/compare/v0.0.3...master)
 
+- make `when` accept callback as well ([b787808](https://github.com/DevMoath/jql-builder/commit/79f4b6ad1ea5a711656aa5a377a124fdd1a558d0))
+- add `appendQuery` function to reduce duplicate code ([79f4b6a](https://github.com/DevMoath/jql-builder/commit/93c904f867b5533b8765625fc740fcc56f0b4ff3))
+- add `orderBy` function ([93c904f](https://github.com/DevMoath/jql-builder/commit/21e26ed760d930310d8625034287677351ee8c04))
+
 ## [v0.0.3 (2021-09-20)](https://github.com/DevMoath/jql-builder/releases/tag/v0.0.3)
 
 - use spatie/macroable to add custom functions ([b69d5c2](https://github.com/DevMoath/jql-builder/commit/f7479607c5b3356e9dfb294154b2fb9c5b1dd35c))
