@@ -2,7 +2,7 @@
 
 ## [Unreleased](https://github.com/devmoath/jql-builder/compare/v0.0.3...master)
 
-- make `when` accept callback as well ([79f4b6a](https://github.com/DevMoath/jql-builder/commit/79f4b6ad1ea5a711656aa5a377a124fdd1a558d0))
+- make `when` and `whenNot` accept callback as well ([79f4b6a](https://github.com/DevMoath/jql-builder/commit/79f4b6ad1ea5a711656aa5a377a124fdd1a558d0)), ([1375ffd](https://github.com/DevMoath/jql-builder/commit/1375ffdc7e62751a9197f9ce8ddfe5bd4a9c0a16))
 - add `appendQuery` function to reduce duplicate code ([93c904f](https://github.com/DevMoath/jql-builder/commit/93c904f867b5533b8765625fc740fcc56f0b4ff3))
 - add `orderBy` function ([21e26ed](https://github.com/DevMoath/jql-builder/commit/21e26ed760d930310d8625034287677351ee8c04))
 - add `rawQuery` function ([50b79c1](https://github.com/DevMoath/jql-builder/commit/50b79c1b2b13b02e08ff5890f4c6f1fc890a27b0))
