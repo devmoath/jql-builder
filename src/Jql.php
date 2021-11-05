@@ -141,6 +141,8 @@ final class Jql implements \Stringable
 
     public function whenNot(mixed $value, callable $callback): self
     {
+        $value = value($value, $this);
+
         if (! $value) {
             return $callback($this, $value);
         }
