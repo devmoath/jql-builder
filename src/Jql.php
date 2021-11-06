@@ -6,58 +6,61 @@ namespace DevMoath\JqlBuilder;
 
 use InvalidArgumentException;
 use Spatie\Macroable\Macroable;
+use Stringable;
 
-final class Jql implements \Stringable
+final class Jql implements Stringable
 {
     use Macroable;
 
-    public const EQUAL = '=';
+    public const EQUALS = '=';
 
-    public const NOT_EQUAL = '!=';
+    public const NOT_EQUALS = '!=';
 
     public const GREATER_THAN = '>';
 
+    public const GREATER_THAN_EQUALS = '>=';
+
     public const LESS_THAN = '<';
 
-    public const GREATER_THAN_OR_EQUAL = '>=';
-
-    public const LESS_THAN_OR_EQUAL = '<=';
-
-    public const LIKE = '~';
-
-    public const NOT_LIKE = '!~';
+    public const LESS_THAN_EQUALS = '<=';
 
     public const IN = 'in';
 
     public const NOT_IN = 'not in';
 
+    public const CONTAINS = '~';
+
+    public const DOES_NOT_CONTAIN = '!~';
+
     public const IS = 'is';
 
     public const IS_NOT = 'is not';
 
-    public const AND = 'and';
-
-    public const OR = 'or';
-
     public const WAS = 'was';
-
-    public const WAS_NOT = 'was not';
 
     public const WAS_IN = 'was in';
 
     public const WAS_NOT_IN = 'was not in';
 
+    public const WAS_NOT = 'was not';
+
     public const CHANGED = 'changed';
+
+    public const AND = 'and';
+
+    public const OR = 'or';
+
+    public const NOT = 'not';
+
+    public const EMPTY = 'empty';
+
+    public const NULL = 'null';
 
     public const ORDER_BY = 'order by';
 
     public const DESC = 'desc';
 
     public const ASC = 'asc';
-
-    public const EMPTY = 'empty';
-
-    public const NULL = 'null';
 
     private string $query = '';
 
@@ -78,52 +81,52 @@ final class Jql implements \Stringable
         return tap($this, fn() => $this->where($column, $operator, $value, self::OR));
     }
 
-    public function whereProject(mixed $value, string $operator = self::EQUAL): self
+    public function whereProject(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->where('project', $operator, $value));
     }
 
-    public function orWhereProject(mixed $value, string $operator = self::EQUAL): self
+    public function orWhereProject(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->orWhere('project', $operator, $value));
     }
 
-    public function whereSummary(mixed $value, string $operator = self::EQUAL): self
+    public function whereSummary(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->where('summary', $operator, $value));
     }
 
-    public function orWhereSummary(mixed $value, string $operator = self::EQUAL): self
+    public function orWhereSummary(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->orWhere('summary', $operator, $value));
     }
 
-    public function whereType(mixed $value, string $operator = self::EQUAL): self
+    public function whereType(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->where('type', $operator, $value));
     }
 
-    public function orWhereType(mixed $value, string $operator = self::EQUAL): self
+    public function orWhereType(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->orWhere('type', $operator, $value));
     }
 
-    public function whereIssueType(mixed $value, string $operator = self::EQUAL): self
+    public function whereIssueType(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->where('issuetype', $operator, $value));
     }
 
-    public function orWhereIssueType(mixed $value, string $operator = self::EQUAL): self
+    public function orWhereIssueType(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->orWhere('issuetype', $operator, $value));
     }
 
-    public function whereStatus(mixed $value, string $operator = self::EQUAL): self
+    public function whereStatus(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->where('status', $operator, $value));
     }
 
-    public function orWhereStatus(mixed $value, string $operator = self::EQUAL): self
+    public function orWhereStatus(mixed $value, string $operator = self::EQUALS): self
     {
         return tap($this, fn() => $this->orWhere('status', $operator, $value));
     }

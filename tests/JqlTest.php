@@ -46,8 +46,8 @@ class JqlTest extends TestCase
     public function it_can_generate_query_with_custom_filed_conditions(): void
     {
         $query = Jql::query()
-            ->where('customfild_111', Jql::EQUAL, 'value')
-            ->where('customfild_222', Jql::EQUAL, 'value')
+            ->where('customfild_111', Jql::EQUALS, 'value')
+            ->where('customfild_222', Jql::EQUALS, 'value')
             ->getQuery();
 
         self::assertSame("customfild_111 = 'value' and customfild_222 = 'value'", $query);
@@ -81,7 +81,7 @@ class JqlTest extends TestCase
 
         $builder::macro('whereCustom', function($value) {
             /** @var Jql $this */
-            return $this->where('custom', Jql::EQUAL, $value);
+            return $this->where('custom', Jql::EQUALS, $value);
         });
 
         /** @noinspection PhpUndefinedMethodInspection */

@@ -17,7 +17,9 @@ composer require devmoath/jql-builder
 Generate query with one condition:
 
 ```php
-\DevMoath\JqlBuilder\Jql::query()
+use DevMoath\JqlBuilder\Jql;
+
+Jql::query()
     ->whereProject('MY PROJECT')
     ->getQuery(); // "project = 'MY PROJECT'"
 ```
@@ -25,7 +27,9 @@ Generate query with one condition:
 Generate query with many conditions:
 
 ```php
-\DevMoath\JqlBuilder\Jql::query()
+use DevMoath\JqlBuilder\Jql;
+
+Jql::query()
     ->whereProject('MY PROJECT')
     ->whereIssueType('support')
     ->whereStatus(['wip', 'created'], Jql::IN)
@@ -35,7 +39,9 @@ Generate query with many conditions:
 Generate query with many conditions and order by:
 
 ```php
-\DevMoath\JqlBuilder\Jql::query()
+use DevMoath\JqlBuilder\Jql;
+
+Jql::query()
     ->whereProject('MY PROJECT')
     ->whereIssueType('support')
     ->whereStatus(['wip', 'created'], Jql::IN)
@@ -46,25 +52,31 @@ Generate query with many conditions and order by:
 generate query with custom filed conditions:
 
 ```php
-\DevMoath\JqlBuilder\Jql::query()
-    ->where('customfild_111', \DevMoath\JqlBuilder\Jql::EQUAL, 'value')
-    ->where('customfild_222', \DevMoath\JqlBuilder\Jql::EQUAL, 'value')
+use DevMoath\JqlBuilder\Jql;
+
+Jql::query()
+    ->where('customfild_111', '=', 'value')
+    ->where('customfild_222', Jql::EQUALS, 'value')
     ->getQuery(); // "customfild_111 = 'value' and customfild_222 = 'value'"
 ```
 
 generate query conditions based on your condition:
 
 ```php
-\DevMoath\JqlBuilder\Jql::query()
-    ->when('MY PROJECT', fn (\DevMoath\JqlBuilder\Jql $builder, $value) => $builder->whereProject($value))
-    ->when(fn(\DevMoath\JqlBuilder\Jql $builder) => false, fn(\DevMoath\JqlBuilder\Jql $builder, $value) => $builder->whereIssueType($value))
+use DevMoath\JqlBuilder\Jql;
+
+Jql::query()
+    ->when('MY PROJECT', fn Jql $builder, $value) => $builder->whereProject($value))
+    ->when(fnJql $builder) => false, fnJql $builder, $value) => $builder->whereIssueType($value))
     ->getQuery(); // "project = 'MY PROJECT'"
 ```
 
 generate query using raw query:
 
 ```php
-\DevMoath\JqlBuilder\Jql::query()
+use DevMoath\JqlBuilder\Jql;
+
+Jql::query()
     ->rawQuery("project = 'MY PROJECT' order by created asc")
     ->getQuery(); // "project = 'MY PROJECT' order by created asc"
 ```
@@ -72,11 +84,13 @@ generate query using raw query:
 Also, you can add macro functions as well:
 
 ```php
-$builder = new \DevMoath\JqlBuilder\Jql;
+use DevMoath\JqlBuilder\Jql;
+
+$builder = new Jql;
 
 $builder::macro('whereCustom', function ($value) {
     /** @var Jql $this */
-    return $this->where('custom', \DevMoath\JqlBuilder\Jql::EQUAL, $value);
+    return $this->where('custom', Jql::EQUALS, $value);
 });
 
 $builder->whereCustom('1')->getQuery(); // "custom = '1'"
