@@ -49,9 +49,9 @@
     },
     "scripts": {
         "test": "phpunit",
-        "test-coverage": "XDEBUG_MODE=coverage phpunit --coverage-html coverage",
-        "test-php-cs-fixer": "php-cs-fixer fix --dry-run",
-        "php-cs-fixer": "php-cs-fixer fix",
+        "test:coverage": "XDEBUG_MODE=coverage phpunit --coverage-html coverage",
+        "php-cs-fixer": "php-cs-fixer fix --dry-run",
+        "php-cs-fixer:fix": "php-cs-fixer fix",
         "phpstan": "phpstan analyse"
     },
     "config": {

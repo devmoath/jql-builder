@@ -1,48 +1,8 @@
-name: Tests
+name: tests
 
 on: [ push, pull_request ]
 
 jobs:
-    phpstan:
-        runs-on: ubuntu-latest
-        name: PHPstan
-        steps:
-            -   name: Checkout code
-                uses: actions/checkout@v2
-
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: 8.0
-                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-                    coverage: none
-
-            -   name: Install dependencies
-                run: composer i --prefer-dist --no-interaction
-
-            -   name: Execute Static Tests
-                run: composer phpstan
-
-    php-cs-fixer:
-        runs-on: ubuntu-latest
-        name: PHP CS Fixer
-        steps:
-            -   name: Checkout code
-                uses: actions/checkout@v2
-
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: 8.0
-                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-                    coverage: none
-
-            -   name: Install dependencies
-                run: composer i --prefer-dist --no-interaction
-
-            -   name: Execute Code Style Tests
-                run: composer test-php-cs-fixer
-
     phpunit:
         runs-on: ${{ matrix.os }}
         strategy:
@@ -52,25 +12,26 @@ jobs:
                 php: [ 8.0, 8.1 ]
                 stability: [ prefer-lowest, prefer-stable ]
 
-        name: P${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
+        name: php@${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v2
 
-            -   name: Setup PHP
+            -   name: Setup php
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+                    extensions: dom, libxml, mbstring
                     coverage: none
 
             -   name: Setup problem matchers
                 run: |
                     echo "::add-matcher::${{ runner.tool_cache }}/php.json"
                     echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
             -   name: Install dependencies
                 run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-            -   name: Execute tests
+            -   name: Run tests
                 run: composer test

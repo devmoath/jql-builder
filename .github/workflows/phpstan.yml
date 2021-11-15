@@ -1,0 +1,24 @@
+name: phpstan
+
+on: [ push, pull_request ]
+
+jobs:
+    phpstan:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+                with:
+                    ref: ${{ github.head_ref }}
+
+            -   name: Setup php
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.0
+                    coverage: none
+
+            -   name: Install dependencies
+                run: composer i --prefer-dist --no-interaction
+
+            -   name: Run phpstan
+                run: vendor/bin/phpstan --error-format=github
