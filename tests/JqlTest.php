@@ -82,7 +82,7 @@ class JqlTest extends TestCase
     {
         $builder = new Jql();
 
-        $builder::macro('whereCustom', function ($value) {
+        $builder::macro('whereCustom', function($value) {
             /** @var Jql $this */
             return $this->where('custom', Jql::EQUALS, $value);
         });
