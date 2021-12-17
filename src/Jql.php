@@ -71,7 +71,7 @@ final class Jql implements Stringable
 
     public function where(string $column, string $operator, mixed $value, string $boolean = self::AND): self
     {
-        $this->invalidBoolean($boolean);
+        $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
         return tap($this, fn() => $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean));
     }
@@ -194,14 +194,25 @@ final class Jql implements Stringable
     /**
      * @throws \InvalidArgumentException
      */
-    private function invalidBoolean(mixed $boolean): void
+    private function invalidBooleanOrOperator(mixed $boolean, string $operator, mixed $value): void
     {
         if (! in_array($boolean, [self::AND, self::OR])) {
             throw new InvalidArgumentException(sprintf(
-                "Illegal boolean [%s] value. only [%s, %s] is acceptable",
+                'Illegal boolean [%s] value. only [%s, %s] is acceptable',
                 $boolean,
                 self::AND,
                 self::OR
+            ));
+        }
+
+        if (! in_array($operator, [self::IN, self::NOT_IN, self::WAS_IN, self::WAS_NOT_IN]) && is_array($value)) {
+            throw new InvalidArgumentException(sprintf(
+                'Illegal operator [%s] value. only [%s, %s, %s, %s] is acceptable when $value type is array',
+                $operator,
+                self::IN,
+                self::NOT_IN,
+                self::WAS_IN,
+                self::WAS_NOT_IN,
             ));
         }
     }

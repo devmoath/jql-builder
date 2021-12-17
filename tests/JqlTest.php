@@ -3,6 +3,7 @@
 namespace DevMoath\JqlBuilder\Tests;
 
 use DevMoath\JqlBuilder\Jql;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class JqlTest extends TestCase
@@ -39,7 +40,9 @@ class JqlTest extends TestCase
             ->orderBy('created', Jql::ASC)
             ->getQuery();
 
-        self::assertSame("project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc", $query);
+        $expected = "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc";
+
+        self::assertSame($expected, $query);
     }
 
     /** @test */
@@ -79,7 +82,7 @@ class JqlTest extends TestCase
     {
         $builder = new Jql();
 
-        $builder::macro('whereCustom', function($value) {
+        $builder::macro('whereCustom', function ($value) {
             /** @var Jql $this */
             return $this->where('custom', Jql::EQUALS, $value);
         });
@@ -88,5 +91,25 @@ class JqlTest extends TestCase
         $query = $builder->whereCustom('1')->getQuery();
 
         self::assertSame("custom = '1'", $query);
+    }
+
+    /** @test */
+    public function it_can_throw_excption_when_invalid_boolean_passed(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Illegal boolean [=] value. only [and, or] is acceptable');
+        $this->expectExceptionCode(0);
+
+        Jql::query()->where('project', Jql::EQUALS, 'MY PROJECT', Jql::EQUALS);
+    }
+
+    /** @test */
+    public function it_can_throw_excption_when_invalid_operator_passed(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Illegal operator [=] value. only [in, not in, was in, was not in] is acceptable when $value type is array');
+        $this->expectExceptionCode(0);
+
+        Jql::query()->where('project', Jql::EQUALS, ['MY PROJECT']);
     }
 }
