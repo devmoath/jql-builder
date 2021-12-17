@@ -136,7 +136,7 @@ final class Jql implements Stringable
         $value = value($value, $this);
 
         if ($value) {
-            return $callback($this, $value);
+            return $callback($this, $value) ?: $this;
         }
 
         return $this;
@@ -147,7 +147,7 @@ final class Jql implements Stringable
         $value = value($value, $this);
 
         if (! $value) {
-            return $callback($this, $value);
+            return $callback($this, $value) ?: $this;
         }
 
         return $this;
