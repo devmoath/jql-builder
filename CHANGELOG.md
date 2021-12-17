@@ -9,6 +9,7 @@
 - add `whereSummary` and `orWhereSummary` functions ([578da6a](https://github.com/DevMoath/jql-builder/commit/578da6a194144a21c26fefb4b3493493f611bc7c))
 - rename and reorder operators and keywords ([f253fe3](https://github.com/DevMoath/jql-builder/commit/f253fe3d352a824c15b397a94401991831f9493b))
 - increase the PHPStan level ([#6](https://github.com/DevMoath/jql-builder/issues/6)) ([cad88cf](https://github.com/DevMoath/jql-builder/commit/cad88cfd75a78c27d767d30667f830232f07ce08))
+- return `$this` if the callback does not return anything ([#5](https://github.com/DevMoath/jql-builder/issues/5)) ([cf7aaa1](https://github.com/DevMoath/jql-builder/commit/cf7aaa17f898c1727c7b32ba4a46109fff77105c))
 
 ## [v0.0.3 (2021-09-20)](https://github.com/DevMoath/jql-builder/releases/tag/v0.0.3)
 
