@@ -1,3 +1,5 @@
+![logo](art/logo.png)
+
 # Jql Builder
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/devmoath/jql-builder.svg?style=for-the-badge)](https://packagist.org/packages/devmoath/jql-builder)
