@@ -1,6 +1,8 @@
 {
     "name": "devmoath/jql-builder",
     "description": "Simple JQL builder for Jira search",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "devmoath",
         "jql-builder",
@@ -10,13 +12,6 @@
         "query-builder",
         "jql"
     ],
-    "homepage": "https://github.com/devmoath/jql-builder",
-    "support": {
-        "issues": "https://github.com/devmoath/jql-builder/issues",
-        "source": "https://github.com/devmoath/jql-builder"
-    },
-    "license": "MIT",
-    "type": "library",
     "authors": [
         {
             "name": "Moath Alhajri",
@@ -24,6 +19,11 @@
             "role": "Developer"
         }
     ],
+    "homepage": "https://github.com/devmoath/jql-builder",
+    "support": {
+        "issues": "https://github.com/devmoath/jql-builder/issues",
+        "source": "https://github.com/devmoath/jql-builder"
+    },
     "require": {
         "php": "^8.0",
         "spatie/macroable": "^2.0"
@@ -34,6 +34,8 @@
         "phpstan/phpstan": "^0.12.99",
         "phpunit/phpunit": "^9.5.9"
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "DevMoath\\JqlBuilder\\": "src"
@@ -47,16 +49,14 @@
             "src/helpers.php"
         ]
     },
-    "scripts": {
-        "test": "phpunit",
-        "test:coverage": "XDEBUG_MODE=coverage phpunit --coverage-html coverage",
-        "php-cs-fixer": "php-cs-fixer fix --dry-run",
-        "php-cs-fixer:fix": "php-cs-fixer fix",
-        "phpstan": "phpstan analyse"
-    },
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "scripts": {
+        "php-cs-fixer": "php-cs-fixer fix --dry-run",
+        "php-cs-fixer:fix": "php-cs-fixer fix",
+        "phpstan": "phpstan analyse",
+        "test": "phpunit",
+        "test:coverage": "XDEBUG_MODE=coverage phpunit --coverage-html coverage"
+    }
 }
