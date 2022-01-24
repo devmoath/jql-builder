@@ -4,12 +4,12 @@ on:
     push:
         paths:
             - '**.php'
-            - '.github/workflows/tests.yml'
+            - '.github/workflows/php-cs-fixer.yml'
             - 'composer.lock'
     pull_request:
         paths:
             - '**.php'
-            - '.github/workflows/tests.yml'
+            - '.github/workflows/php-cs-fixer.yml'
             - 'composer.lock'
 
 jobs:
