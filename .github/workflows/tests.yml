@@ -1,22 +1,28 @@
 name: tests
 
-on: [ push, pull_request ]
+on:
+    push:
+        paths:
+            - '**.php'
+            - '.github/workflows/tests.yml'
+            - 'composer.lock'
+    pull_request:
+        paths:
+            - '**.php'
+            - '.github/workflows/tests.yml'
+            - 'composer.lock'
 
 jobs:
     phpunit:
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         strategy:
-            fail-fast: true
             matrix:
-                os: [ ubuntu-latest, windows-latest ]
                 php: [ 8.0, 8.1 ]
-                stability: [ prefer-lowest, prefer-stable ]
 
-        name: php@${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
+        name: php@${{ matrix.php }}
 
         steps:
-            -   name: Checkout code
-                uses: actions/checkout@v2
+            -   uses: actions/checkout@v2
 
             -   name: Setup php
                 uses: shivammathur/setup-php@v2
@@ -25,13 +31,14 @@ jobs:
                     extensions: dom, libxml, mbstring
                     coverage: none
 
-            -   name: Setup problem matchers
-                run: |
-                    echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-                    echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+            -   name: Cache composer dependencies
+                uses: actions/cache@v2
+                with:
+                    path: vendor
+                    key: composer-${{ hashFiles('composer.lock') }}
 
             -   name: Install dependencies
-                run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+                run: composer install --prefer-dist --no-interaction
 
             -   name: Run tests
                 run: composer test
