@@ -1,8 +1,7 @@
-.idea
-*.cache
 /vendor
-composer.phar
-composer.lock
+/composer.lock
 .DS_Store
 /.idea
-coverage
+/coverage
+/.php-cs-fixer.cache
+/.phpunit.result.cache

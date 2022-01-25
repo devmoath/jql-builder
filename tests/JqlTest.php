@@ -1,8 +1,8 @@
 <?php
 
-namespace DevMoath\JqlBuilder\Tests;
+namespace JqlBuilder\Tests;
 
-use DevMoath\JqlBuilder\Jql;
+use JqlBuilder\Jql;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

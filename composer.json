@@ -38,12 +38,12 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "DevMoath\\JqlBuilder\\": "src"
+            "JqlBuilder\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DevMoath\\JqlBuilder\\Tests\\": "tests"
+            "JqlBuilder\\Tests\\": "tests"
         },
         "files": [
             "src/helpers.php"
