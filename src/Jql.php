@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevMoath\JqlBuilder;
+namespace JqlBuilder;
 
 use InvalidArgumentException;
 use Spatie\Macroable\Macroable;

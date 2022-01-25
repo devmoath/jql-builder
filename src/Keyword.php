@@ -1,6 +1,6 @@
 <?php
 
-namespace DevMoath\JqlBuilder;
+namespace JqlBuilder;
 
 final class Keyword
 {
