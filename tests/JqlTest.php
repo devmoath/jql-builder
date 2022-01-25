@@ -24,7 +24,7 @@ class JqlTest extends TestCase
         $query = Jql::query()
             ->whereProject('MY PROJECT')
             ->whereIssueType('support')
-            ->whereStatus(['wip', 'created'], Jql::IN)
+            ->whereStatus(['wip', 'created'], 'in')
             ->getQuery();
 
         self::assertSame("project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created')", $query);
@@ -36,8 +36,8 @@ class JqlTest extends TestCase
         $query = Jql::query()
             ->whereProject('MY PROJECT')
             ->whereIssueType('support')
-            ->whereStatus(['wip', 'created'], Jql::IN)
-            ->orderBy('created', Jql::ASC)
+            ->whereStatus(['wip', 'created'], 'in')
+            ->orderBy('created', 'asc')
             ->getQuery();
 
         $expected = "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc";
@@ -49,8 +49,8 @@ class JqlTest extends TestCase
     public function it_can_generate_query_with_custom_filed_conditions(): void
     {
         $query = Jql::query()
-            ->where('customfild_111', Jql::EQUALS, 'value')
-            ->where('customfild_222', Jql::EQUALS, 'value')
+            ->where('customfild_111', '=', 'value')
+            ->where('customfild_222', '=', 'value')
             ->getQuery();
 
         self::assertSame("customfild_111 = 'value' and customfild_222 = 'value'", $query);
@@ -60,8 +60,8 @@ class JqlTest extends TestCase
     public function it_can_generate_query_conditions_based_on_your_condition(): void
     {
         $query = Jql::query()
-            ->when('MY PROJECT', fn(Jql $builder, $value) => $builder->whereProject($value))
-            ->when(fn(Jql $builder) => false, fn(Jql $builder, $value) => $builder->whereIssueType($value))
+            ->when('MY PROJECT', fn (Jql $builder, $value) => $builder->whereProject($value))
+            ->when(fn (Jql $builder) => false, fn (Jql $builder, $value) => $builder->whereIssueType($value))
             ->getQuery();
 
         self::assertSame("project = 'MY PROJECT'", $query);
@@ -82,9 +82,9 @@ class JqlTest extends TestCase
     {
         $builder = new Jql();
 
-        $builder::macro('whereCustom', function($value) {
+        $builder::macro('whereCustom', function ($value) {
             /** @var Jql $this */
-            return $this->where('custom', Jql::EQUALS, $value);
+            return $this->where('custom', '=', $value);
         });
 
         /** @noinspection PhpUndefinedMethodInspection */
@@ -94,22 +94,22 @@ class JqlTest extends TestCase
     }
 
     /** @test */
-    public function it_can_throw_excption_when_invalid_boolean_passed(): void
+    public function it_can_throw_exception_when_invalid_boolean_passed(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Illegal boolean [=] value. only [and, or] is acceptable');
         $this->expectExceptionCode(0);
 
-        Jql::query()->where('project', Jql::EQUALS, 'MY PROJECT', Jql::EQUALS);
+        Jql::query()->where('project', '=', 'MY PROJECT', '=');
     }
 
     /** @test */
-    public function it_can_throw_excption_when_invalid_operator_passed(): void
+    public function it_can_throw_exception_when_invalid_operator_passed(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Illegal operator [=] value. only [in, not in, was in, was not in] is acceptable when $value type is array');
         $this->expectExceptionCode(0);
 
-        Jql::query()->where('project', Jql::EQUALS, ['MY PROJECT']);
+        Jql::query()->where('project', '=', ['MY PROJECT']);
     }
 }

@@ -14,5 +14,4 @@ $finder = Finder::create()
 
 return (new Config())->setRules([
     '@PSR2' => true,
-    'function_declaration' => ['closure_function_spacing' => 'none'],
 ])->setFinder($finder);
