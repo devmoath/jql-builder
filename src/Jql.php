@@ -126,10 +126,20 @@ final class Jql implements Stringable
     private function quote(string $operator, mixed $value): string
     {
         if (in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN])) {
-            return sprintf("('%s')", implode("', '", array_wrap($value)));
+            $values = array_reduce(array_wrap($value), function ($prev, $current) {
+                if ($prev === null) {
+                    return '"'.str_replace('"', '\\"', $current).'"';
+                }
+
+                return $prev.', "'.str_replace('"', '\\"', $current).'"';
+            });
+
+            return "($values)";
         }
 
-        return "'$value'";
+        $value = str_replace('"', '\\"', $value);
+
+        return "\"$value\"";
     }
 
     private function appendQuery(string $query, string $boolean = ''): void
@@ -137,7 +147,7 @@ final class Jql implements Stringable
         if (empty($this->query)) {
             $this->query = $query;
         } else {
-            $this->query .= " ".trim("$boolean $query");
+            $this->query .= ' '.trim("$boolean $query");
         }
     }
 
