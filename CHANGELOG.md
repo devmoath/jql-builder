@@ -14,6 +14,7 @@
 - Improve workflows ([#8](https://github.com/DevMoath/jql-builder/pull/8)) ([8ea2c2a](https://github.com/DevMoath/jql-builder/commit/8ea2c2a9ba19ca01553b7129911dc847d4cb572a))
 - Extract the constants to new class base on its type ([#9](https://github.com/DevMoath/jql-builder/pull/9)) ([c3eebea](https://github.com/DevMoath/jql-builder/commit/c3eebea6455a2ad220888ff46e3c400cc321d671))
 - Remove my personal username from namespace ([#11](https://github.com/DevMoath/jql-builder/pull/11)) ([a507e41](https://github.com/DevMoath/jql-builder/commit/a507e41312d328590114e713df6123ae96854525))
+- Escape quotes in value/s ([#12](https://github.com/DevMoath/jql-builder/pull/12)) ([2bfdf12](https://github.com/DevMoath/jql-builder/commit/2bfdf129daa42838c7f9d45306263e3031cfbfb4))
 
 ## [v0.0.3 (2021-09-20)](https://github.com/DevMoath/jql-builder/releases/tag/v0.0.3)
 
