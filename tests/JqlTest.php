@@ -2,8 +2,8 @@
 
 namespace JqlBuilder\Tests;
 
-use JqlBuilder\Jql;
 use InvalidArgumentException;
+use JqlBuilder\Jql;
 use PHPUnit\Framework\TestCase;
 
 class JqlTest extends TestCase
@@ -15,7 +15,7 @@ class JqlTest extends TestCase
             ->whereProject('MY PROJECT')
             ->getQuery();
 
-        self::assertSame("project = 'MY PROJECT'", $query);
+        self::assertSame('project = "MY PROJECT"', $query);
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class JqlTest extends TestCase
             ->whereStatus(['wip', 'created'], 'in')
             ->getQuery();
 
-        self::assertSame("project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created')", $query);
+        self::assertSame('project = "MY PROJECT" and issuetype = "support" and status in ("wip", "created")', $query);
     }
 
     /** @test */
@@ -40,7 +40,7 @@ class JqlTest extends TestCase
             ->orderBy('created', 'asc')
             ->getQuery();
 
-        $expected = "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc";
+        $expected = 'project = "MY PROJECT" and issuetype = "support" and status in ("wip", "created") order by created asc';
 
         self::assertSame($expected, $query);
     }
@@ -53,7 +53,7 @@ class JqlTest extends TestCase
             ->where('customfild_222', '=', 'value')
             ->getQuery();
 
-        self::assertSame("customfild_111 = 'value' and customfild_222 = 'value'", $query);
+        self::assertSame('customfild_111 = "value" and customfild_222 = "value"', $query);
     }
 
     /** @test */
@@ -64,17 +64,17 @@ class JqlTest extends TestCase
             ->when(fn (Jql $builder) => false, fn (Jql $builder, $value) => $builder->whereIssueType($value))
             ->getQuery();
 
-        self::assertSame("project = 'MY PROJECT'", $query);
+        self::assertSame('project = "MY PROJECT"', $query);
     }
 
     /** @test */
     public function it_can_generate_query_using_raw_query(): void
     {
         $query = Jql::query()
-            ->rawQuery("project = 'MY PROJECT' order by created asc")
+            ->rawQuery('project = "MY PROJECT" order by created asc')
             ->getQuery();
 
-        self::assertSame("project = 'MY PROJECT' order by created asc", $query);
+        self::assertSame('project = "MY PROJECT" order by created asc', $query);
     }
 
     /** @test */
@@ -90,7 +90,7 @@ class JqlTest extends TestCase
         /** @noinspection PhpUndefinedMethodInspection */
         $query = $builder->whereCustom('1')->getQuery();
 
-        self::assertSame("custom = '1'", $query);
+        self::assertSame('custom = "1"', $query);
     }
 
     /** @test */
@@ -111,5 +111,15 @@ class JqlTest extends TestCase
         $this->expectExceptionCode(0);
 
         Jql::query()->where('project', '=', ['MY PROJECT']);
+    }
+
+    /** @test */
+    public function it_can_escape_quotes_in_value(): void
+    {
+        $query = Jql::query()
+            ->where('summary', '=', 'sub-issue for "TES-xxx"')
+            ->getQuery();
+
+        self::assertSame('summary = "sub-issue for \"TES-xxx\""', $query);
     }
 }
