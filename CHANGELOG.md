@@ -1,17 +1,18 @@
 # Release Notes
 
-## [Unreleased](https://github.com/devmoath/jql-builder/compare/v0.0.3...master)
+## [Unreleased](https://github.com/devmoath/jql-builder/compare/v1.0.0...master)
+
+Nothing Yet
+
+## [v1.0.0 (2022-01-31)](https://github.com/DevMoath/jql-builder/releases/tag/v1.0.0)
 
 - make `when` and `whenNot` accept callback as well ([79f4b6a](https://github.com/DevMoath/jql-builder/commit/79f4b6ad1ea5a711656aa5a377a124fdd1a558d0)), ([1375ffd](https://github.com/DevMoath/jql-builder/commit/1375ffdc7e62751a9197f9ce8ddfe5bd4a9c0a16))
 - add `appendQuery` function to reduce duplicate code ([93c904f](https://github.com/DevMoath/jql-builder/commit/93c904f867b5533b8765625fc740fcc56f0b4ff3))
 - add `orderBy` function ([21e26ed](https://github.com/DevMoath/jql-builder/commit/21e26ed760d930310d8625034287677351ee8c04))
 - add `rawQuery` function ([50b79c1](https://github.com/DevMoath/jql-builder/commit/50b79c1b2b13b02e08ff5890f4c6f1fc890a27b0))
-- add `whereSummary` and `orWhereSummary` functions ([578da6a](https://github.com/DevMoath/jql-builder/commit/578da6a194144a21c26fefb4b3493493f611bc7c))
-- rename and reorder operators and keywords ([f253fe3](https://github.com/DevMoath/jql-builder/commit/f253fe3d352a824c15b397a94401991831f9493b))
 - increase the PHPStan level ([#6](https://github.com/DevMoath/jql-builder/issues/6)) ([cad88cf](https://github.com/DevMoath/jql-builder/commit/cad88cfd75a78c27d767d30667f830232f07ce08))
 - return `$this` if the callback does not return anything ([#5](https://github.com/DevMoath/jql-builder/issues/5)) ([cf7aaa1](https://github.com/DevMoath/jql-builder/commit/cf7aaa17f898c1727c7b32ba4a46109fff77105c))
 - Throw exception when `$operator` is illegal for the `$value` type ([#2](https://github.com/DevMoath/jql-builder/issues/2)) ([3ffedf1](https://github.com/DevMoath/jql-builder/commit/3ffedf185039012a4c6d8f62f9c084f9a4c868fb))
-- Improve workflows ([#8](https://github.com/DevMoath/jql-builder/pull/8)) ([8ea2c2a](https://github.com/DevMoath/jql-builder/commit/8ea2c2a9ba19ca01553b7129911dc847d4cb572a))
 - Extract the constants to new class base on its type ([#9](https://github.com/DevMoath/jql-builder/pull/9)) ([c3eebea](https://github.com/DevMoath/jql-builder/commit/c3eebea6455a2ad220888ff46e3c400cc321d671))
 - Remove my personal username from namespace ([#11](https://github.com/DevMoath/jql-builder/pull/11)) ([a507e41](https://github.com/DevMoath/jql-builder/commit/a507e41312d328590114e713df6123ae96854525))
 - Escape quotes in value/s ([#12](https://github.com/DevMoath/jql-builder/pull/12)) ([2bfdf12](https://github.com/DevMoath/jql-builder/commit/2bfdf129daa42838c7f9d45306263e3031cfbfb4))
