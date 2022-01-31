@@ -18,91 +18,51 @@ composer require devmoath/jql-builder
 
 ## Usage
 
-Generate query with one condition:
+This is how to generate query:
 
 ```php
 use JqlBuilder\Jql;
 
-Jql::query()
-    ->whereProject('MY PROJECT')
-    ->getQuery(); // "project = 'MY PROJECT'"
+$builder = new Jql();
 
-// Or just cast it to string
-(string) Jql::query()
-    ->whereProject('MY PROJECT'); // "project = 'MY PROJECT'"
-```
+// Simple query
+$query = $builder->where('project', '=', 'MY PROJECT')->getQuery();
 
-Generate query with many conditions:
+echo $query; 
+// 'project = "MY PROJECT"'
 
-```php
-use JqlBuilder\Jql;
+$builder = new Jql();
 
-Jql::query()
-    ->whereProject('MY PROJECT')
-    ->whereIssueType('support')
-    ->whereStatus(['wip', 'created'], 'in')
-    ->getQuery(); // "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created')"
-```
-
-Generate query with many conditions and order by:
-
-```php
-use JqlBuilder\Jql;
-
-Jql::query()
-    ->whereProject('MY PROJECT')
-    ->whereIssueType('support')
-    ->whereStatus(['wip', 'created'], 'in')
+// Complex query
+$query = $builder->where('project', '=', 'MY PROJECT')
+    ->where('status', 'in', ['New', 'Done'])
+    ->where('summary', '~', 'sub-issue for "TES-xxx"')
+    ->where('labels', '=', 'support')
+    ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'admin'))
+    ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'guest'))
     ->orderBy('created', 'asc')
-    ->getQuery(); // "project = 'MY PROJECT' and issuetype = 'support' and status in ('wip', 'created') order by created asc"
+    ->getQuery();
+
+echo $query; 
+// 'project = "MY PROJECT" and status in ("New", "Done") and summary ~ "sub-issue for \"TES-xxx\"" and labels = "support" and creator = "guest" order by created asc'
 ```
 
-generate query with custom filed conditions:
+Also, you can add macro functions as well to encapsulate your logic:
 
 ```php
 use JqlBuilder\Jql;
 
-Jql::query()
-    ->where('customfild_111', '=', 'value')
-    ->where('customfild_222', '=', 'value')
-    ->getQuery(); // "customfild_111 = 'value' and customfild_222 = 'value'"
-```
+$builder = new Jql();
 
-generate query conditions based on your condition:
-
-```php
-use JqlBuilder\Jql;
-
-Jql::query()
-    ->when('MY PROJECT', fn (Jql $builder, $value) => $builder->whereProject($value))
-    // or you can use callback 
-    ->when(fn (Jql $builder) => false, fn (Jql $builder, $value) => $builder->whereIssueType($value))
-    ->getQuery(); // "project = 'MY PROJECT'"
-```
-
-generate query using raw query:
-
-```php
-use JqlBuilder\Jql;
-
-Jql::query()
-    ->rawQuery("project = 'MY PROJECT' order by created asc")
-    ->getQuery(); // "project = 'MY PROJECT' order by created asc"
-```
-
-Also, you can add macro functions as well:
-
-```php
-use JqlBuilder\Jql;
-
-$builder = new Jql;
-
-$builder::macro('whereCustom', function ($value) {
+$builder::macro('whereCustom', function (mixed $value) {
     /** @var Jql $this */
     return $this->where('custom', '=', $value);
 });
 
-$builder->whereCustom('1')->getQuery(); // "custom = '1'"
+$query = $builder->whereCustom('1')->getQuery();
+
+echo $query;
+// 'custom = "1"'
 ```
 
 ## Testing
