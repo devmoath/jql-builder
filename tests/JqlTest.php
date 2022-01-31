@@ -23,14 +23,14 @@ class JqlTest extends TestCase
 
         $query = $builder->where('project', '=', 'MY PROJECT')
             ->where('status', 'in', ['New', 'Done'])
-            ->where('summary', '~', 'sub-issue for "TES-xxx"')
-            ->where('labels', '=', 'support')
+            ->orWhere('summary', '~', 'sub-issue for "TES-xxx"')
+            ->orWhere('labels', '=', 'support')
             ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'admin'))
             ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'guest'))
             ->orderBy('created', 'asc')
             ->getQuery();
 
-        $expected = 'project = "MY PROJECT" and status in ("New", "Done") and summary ~ "sub-issue for \"TES-xxx\"" and labels = "support" and creator = "guest" order by created asc';
+        $expected = 'project = "MY PROJECT" and status in ("New", "Done") or summary ~ "sub-issue for \"TES-xxx\"" or labels = "support" and creator = "guest" order by created asc';
 
         self::assertSame($expected, $query);
     }

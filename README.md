@@ -36,15 +36,15 @@ $builder = new Jql();
 // Complex query
 $query = $builder->where('project', '=', 'MY PROJECT')
     ->where('status', 'in', ['New', 'Done'])
-    ->where('summary', '~', 'sub-issue for "TES-xxx"')
-    ->where('labels', '=', 'support')
+    ->orWhere('summary', '~', 'sub-issue for "TES-xxx"')
+    ->orWhere('labels', '=', 'support')
     ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'admin'))
     ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'guest'))
     ->orderBy('created', 'asc')
     ->getQuery();
 
 echo $query; 
-// 'project = "MY PROJECT" and status in ("New", "Done") and summary ~ "sub-issue for \"TES-xxx\"" and labels = "support" and creator = "guest" order by created asc'
+// 'project = "MY PROJECT" and status in ("New", "Done") or summary ~ "sub-issue for \"TES-xxx\"" or labels = "support" and creator = "guest" order by created asc'
 ```
 
 Also, you can add macro functions as well to encapsulate your logic:
