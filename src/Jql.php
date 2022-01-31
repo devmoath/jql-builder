@@ -14,11 +14,6 @@ final class Jql implements Stringable
 
     private string $query = '';
 
-    public static function query(): self
-    {
-        return new self();
-    }
-
     public function where(string $column, string $operator, mixed $value, string $boolean = Keyword::AND): self
     {
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
@@ -29,56 +24,6 @@ final class Jql implements Stringable
     public function orWhere(string $column, string $operator, mixed $value): self
     {
         return tap($this, fn () => $this->where($column, $operator, $value, Keyword::OR));
-    }
-
-    public function whereProject(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->where('project', $operator, $value));
-    }
-
-    public function orWhereProject(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->orWhere('project', $operator, $value));
-    }
-
-    public function whereSummary(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->where('summary', $operator, $value));
-    }
-
-    public function orWhereSummary(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->orWhere('summary', $operator, $value));
-    }
-
-    public function whereType(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->where('type', $operator, $value));
-    }
-
-    public function orWhereType(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->orWhere('type', $operator, $value));
-    }
-
-    public function whereIssueType(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->where('issuetype', $operator, $value));
-    }
-
-    public function orWhereIssueType(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->orWhere('issuetype', $operator, $value));
-    }
-
-    public function whereStatus(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->where('status', $operator, $value));
-    }
-
-    public function orWhereStatus(mixed $value, string $operator = Operator::EQUALS): self
-    {
-        return tap($this, fn () => $this->orWhere('status', $operator, $value));
     }
 
     public function when(mixed $value, callable $callback): self
