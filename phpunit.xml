@@ -19,5 +19,10 @@
         <include>
             <directory suffix=".php">./src</directory>
         </include>
+        <report>
+            <html outputDirectory="coverage"/>
+            <text outputFile="coverage/coverage.txt"/>
+            <clover outputFile="coverage/clover.xml"/>
+        </report>
     </coverage>
 </phpunit>
