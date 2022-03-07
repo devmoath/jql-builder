@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JqlBuilder;
 
+use Closure;
 use InvalidArgumentException;
 use Spatie\Macroable\Macroable;
 use Stringable;
@@ -14,14 +15,33 @@ final class Jql implements Stringable
 
     private string $query = '';
 
-    public function where(string $column, string $operator, mixed $value, string $boolean = Keyword::AND): self
-    {
+    public function where(
+        string|Closure $column,
+        string $operator = Operator::EQUALS,
+        mixed $value = null,
+        string $boolean = Keyword::AND
+    ): self {
+        if ($column instanceof Closure) {
+            return tap($this, function () use ($boolean, $column) {
+                if (empty($this->query)) {
+                    $queryTemplate = "(%s)";
+                } else {
+                    $queryTemplate = "$this->query $boolean (%s)";
+                    $this->query = '';
+                }
+
+                $column($this);
+
+                $this->query = sprintf($queryTemplate, $this->query);
+            });
+        }
+
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
         return tap($this, fn () => $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean));
     }
 
-    public function orWhere(string $column, string $operator, mixed $value): self
+    public function orWhere(string|Closure $column, string $operator = Operator::EQUALS, mixed $value = null): self
     {
         return tap($this, fn () => $this->where($column, $operator, $value, Keyword::OR));
     }
