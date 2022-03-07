@@ -36,6 +36,36 @@ class JqlTest extends TestCase
     }
 
     /** @test */
+    public function it_can_generate_query_with_grouped_conditions(): void
+    {
+        $actualQueries = [
+            (new Jql())->where('creator', '=', '1646667083862@mailinator.com')
+                ->where(function (Jql $builder) {
+                    $builder->where('project', '=', 'A')
+                        ->where('status', '=', '"Closed"');
+                })
+                ->orWhere(function (Jql $builder) {
+                    $builder->where('project', '=', '"B"')
+                        ->where('status', '!=', 'Closed');
+                })->getQuery(),
+            (new Jql())->where(function (Jql $builder) {
+                $builder->where('project', '=', 'A')
+                    ->where('status', '=', 'Closed');
+            })->orWhere(function (Jql $builder) {
+                $builder->where('project', '=', 'B')
+                    ->where('status', '!=', 'Closed');
+            })->getQuery(),
+        ];
+
+        $expectedQueries = [
+            'creator = "1646667083862@mailinator.com" and (project = "A" and status = "\"Closed\"") or (project = "\"B\"" and status != "Closed")',
+            '(project = "A" and status = "Closed") or (project = "B" and status != "Closed")',
+        ];
+
+        $this->assertEquals($expectedQueries, $actualQueries);
+    }
+
+    /** @test */
     public function it_can_add_macro(): void
     {
         $builder = new Jql();
@@ -52,7 +82,7 @@ class JqlTest extends TestCase
     }
 
     /** @test */
-    public function it_can_throw_exception_when_invalid_boolean_passed(): void
+    public function it_will_throw_exception_when_invalid_boolean_passed(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Illegal boolean [=] value. only [and, or] is acceptable');
@@ -62,7 +92,7 @@ class JqlTest extends TestCase
     }
 
     /** @test */
-    public function it_can_throw_exception_when_invalid_operator_passed(): void
+    public function it_will_throw_exception_when_invalid_operator_passed(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Illegal operator [=] value. only [in, not in, was in, was not in] is acceptable when $value type is array');
