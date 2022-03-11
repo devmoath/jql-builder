@@ -7,6 +7,7 @@
 [![Tests Workflow Status](https://img.shields.io/github/workflow/status/devmoath/jql-builder/tests?label=Tests&style=for-the-badge)](https://github.com/DevMoath/jql-builder/actions/workflows/tests.yml)
 [![phpstan Workflow Status](https://img.shields.io/github/workflow/status/devmoath/jql-builder/phpstan?label=phpstan&style=for-the-badge)](https://github.com/DevMoath/jql-builder/actions/workflows/phpstan.yml)
 [![php-cs-fixer Workflow Status](https://img.shields.io/github/workflow/status/devmoath/jql-builder/php-cs-fixer?label=php-cs-fixer&style=for-the-badge)](https://github.com/DevMoath/jql-builder/actions/workflows/php-cs-fixer.yml)
+[![Code Coverage Percentage](https://img.shields.io/codecov/c/gh/devmoath/jql-builder?style=for-the-badge&token=L3WY57B8P1)](https://codecov.io/gh/DevMoath/jql-builder)
 
 Simple JQL builder for Jira search
 
