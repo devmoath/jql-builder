@@ -1,0 +1,44 @@
+name: codecov
+
+on:
+    push:
+        paths:
+            - '**.php'
+            - '.github/workflows/codecov.yml'
+            - 'composer.lock'
+            - 'composer.json'
+    pull_request:
+        paths:
+            - '**.php'
+            - '.github/workflows/codecov.yml'
+            - 'composer.lock'
+            - 'composer.json'
+
+jobs:
+    codecov:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.1
+                    coverage: xdebug
+
+            -   name: Cache composer dependencies
+                uses: actions/cache@v2
+                with:
+                    path: vendor
+                    key: composer-${{ hashFiles('composer.lock') }}
+
+            -   name: Install dependencies
+                run: composer install --prefer-dist --no-interaction
+
+            -   name: Run tests
+                run: XDEBUG_MODE=coverage composer test
+
+            -   uses: codecov/codecov-action@v2
+                with:
+                    directory: ./coverage
