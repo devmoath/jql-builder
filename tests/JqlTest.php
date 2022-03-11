@@ -38,7 +38,7 @@ class JqlTest extends TestCase
 
         $builder = new Jql();
 
-        $query = $builder
+        $query = (string) $builder
             ->where('project', 'MY PROJECT')
             ->where('status', ['New', 'Done'])
             ->orWhere('status', ['New', 'Done'])
@@ -46,8 +46,21 @@ class JqlTest extends TestCase
             ->orWhere('labels', 'support')
             ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', 'admin'))
             ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', 'guest'))
-            ->orderBy('created', 'asc')
-            ->getQuery();
+            ->whenNot(false, fn (Jql $builder, mixed $value) => $builder->orWhere('creator', 'admin'))
+            ->whenNot(true, fn (Jql $builder, mixed $value) => $builder->orWhere('creator', 'guest'))
+            ->orderBy('created', 'asc');
+
+        $expected = 'project = "MY PROJECT" and status in ("New", "Done") or status in ("New", "Done") or summary ~ "sub-issue for \"TES-xxx\"" or labels = "support" and creator = "guest" or creator = "admin" order by created asc';
+
+        self::assertSame($expected, $query);
+    }
+
+    /** @test */
+    public function it_can_generate_raw_query(): void
+    {
+        $query = (string) (new Jql())->rawQuery('project = "MY PROJECT"');
+
+        $expected = 'project = "MY PROJECT"';
 
         self::assertSame($expected, $query);
     }
