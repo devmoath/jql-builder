@@ -75,16 +75,3 @@ echo $query;
 ```bash
 composer test
 ```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Credits
-
-- [Moath](https://github.com/devmoath)
-- [All Contributors](https://github.com/DevMoath/jql-builder/graphs/contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
