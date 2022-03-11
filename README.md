@@ -26,24 +26,24 @@ use JqlBuilder\Jql;
 $builder = new Jql();
 
 // Simple query
-$query = $builder->where('project', '=', 'MY PROJECT')->getQuery();
+$query = $builder->where('project', 'MY PROJECT')->getQuery();
 
-echo $query; 
+echo $query;
 // 'project = "MY PROJECT"'
 
 $builder = new Jql();
 
 // Complex query
-$query = $builder->where('project', '=', 'MY PROJECT')
-    ->where('status', 'in', ['New', 'Done'])
+$query = $builder->where('project', 'MY PROJECT')
+    ->where('status', ['New', 'Done'])
     ->orWhere('summary', '~', 'sub-issue for "TES-xxx"')
-    ->orWhere('labels', '=', 'support')
-    ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'admin'))
-    ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'guest'))
+    ->orWhere('labels', 'support')
+    ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', 'admin'))
+    ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', 'guest'))
     ->orderBy('created', 'asc')
     ->getQuery();
 
-echo $query; 
+echo $query;
 // 'project = "MY PROJECT" and status in ("New", "Done") or summary ~ "sub-issue for \"TES-xxx\"" or labels = "support" and creator = "guest" order by created asc'
 ```
 
@@ -55,8 +55,12 @@ use JqlBuilder\Jql;
 $builder = new Jql();
 
 $builder::macro('whereCustom', function (mixed $value) {
+    /*
+     * your code...
+     */
+    
     /** @var Jql $this */
-    return $this->where('custom', '=', $value);
+    return $this->where('custom', $value);
 });
 
 $query = $builder->whereCustom('1')->getQuery();
