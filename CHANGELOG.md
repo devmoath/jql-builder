@@ -3,6 +3,7 @@
 ## [Unreleased](https://github.com/devmoath/jql-builder/compare/v1.0.0...master)
 
 - Group conditions within parentheses ([#15](https://github.com/DevMoath/jql-builder/issues/15))
+- make operator optional and accept `=` by default ([#18](https://github.com/DevMoath/jql-builder/issues/18))
 
 ## [v1.0.0 (2022-01-31)](https://github.com/DevMoath/jql-builder/releases/tag/v1.0.0)
 
