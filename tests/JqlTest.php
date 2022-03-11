@@ -21,8 +21,10 @@ class JqlTest extends TestCase
 
         $builder = new Jql();
 
-        $query = $builder->where('project', '=', 'MY PROJECT')
+        $query = $builder
+            ->where('project', '=', 'MY PROJECT')
             ->where('status', 'in', ['New', 'Done'])
+            ->orWhere('status', ['New', 'Done'])
             ->orWhere('summary', '~', 'sub-issue for "TES-xxx"')
             ->orWhere('labels', '=', 'support')
             ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', '=', 'admin'))
@@ -30,7 +32,22 @@ class JqlTest extends TestCase
             ->orderBy('created', 'asc')
             ->getQuery();
 
-        $expected = 'project = "MY PROJECT" and status in ("New", "Done") or summary ~ "sub-issue for \"TES-xxx\"" or labels = "support" and creator = "guest" order by created asc';
+        $expected = 'project = "MY PROJECT" and status in ("New", "Done") or status in ("New", "Done") or summary ~ "sub-issue for \"TES-xxx\"" or labels = "support" and creator = "guest" order by created asc';
+
+        self::assertSame($expected, $query);
+
+        $builder = new Jql();
+
+        $query = $builder
+            ->where('project', 'MY PROJECT')
+            ->where('status', ['New', 'Done'])
+            ->orWhere('status', ['New', 'Done'])
+            ->orWhere('summary', '~', 'sub-issue for "TES-xxx"')
+            ->orWhere('labels', 'support')
+            ->when(false, fn (Jql $builder, mixed $value) => $builder->where('creator', 'admin'))
+            ->when(true, fn (Jql $builder, mixed $value) => $builder->where('creator', 'guest'))
+            ->orderBy('created', 'asc')
+            ->getQuery();
 
         self::assertSame($expected, $query);
     }

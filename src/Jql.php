@@ -17,7 +17,7 @@ final class Jql implements Stringable
 
     public function where(
         string|Closure $column,
-        string $operator = Operator::EQUALS,
+        mixed $operator = Operator::EQUALS,
         mixed $value = null,
         string $boolean = Keyword::AND
     ): self {
@@ -36,13 +36,21 @@ final class Jql implements Stringable
             });
         }
 
+        if (count(func_get_args()) === 2) {
+            [$column, $operator, $value] = [$column, is_array($operator) ? Operator::IN : Operator::EQUALS, $operator];
+        }
+
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
         return tap($this, fn () => $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean));
     }
 
-    public function orWhere(string|Closure $column, string $operator = Operator::EQUALS, mixed $value = null): self
+    public function orWhere(string|Closure $column, mixed $operator = Operator::EQUALS, mixed $value = null): self
     {
+        if (count(func_get_args()) === 2) {
+            [$column, $operator, $value] = [$column, is_array($operator) ? Operator::IN : Operator::EQUALS, $operator];
+        }
+
         return tap($this, fn () => $this->where($column, $operator, $value, Keyword::OR));
     }
 
