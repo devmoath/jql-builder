@@ -30,7 +30,8 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.1",
-        "nunomaduro/collision": "^5.9",
+        "orchestra/testbench": "^7.0",
+        "nunomaduro/collision": "^6.0",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.5.9"
     },
@@ -48,6 +49,16 @@
         "files": [
             "src/helpers.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JqlBuilder\\Providers\\ServiceProvider"
+            ],
+            "aliases": {
+                "Jql": "JqlBuilder\\Facades\\Jql"
+            }
+        }
     },
     "config": {
         "sort-packages": true
