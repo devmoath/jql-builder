@@ -70,6 +70,17 @@ echo $query;
 // 'custom = "1"'
 ```
 
+laravel facade support out of the box:
+
+```php
+use JqlBuilder\Facades\Jql;
+
+$query = Jql::where('summary', '=', 'value')->getQuery();
+
+echo $query;
+// 'summary = "value"'
+```
+
 ## Testing
 
 ```bash
