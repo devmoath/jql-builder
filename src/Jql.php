@@ -22,18 +22,18 @@ final class Jql implements Stringable
         string $boolean = Keyword::AND
     ): self {
         if ($column instanceof Closure) {
-            return tap($this, function () use ($boolean, $column) {
-                if (empty($this->query)) {
-                    $queryTemplate = "(%s)";
-                } else {
-                    $queryTemplate = "$this->query $boolean (%s)";
-                    $this->query = '';
-                }
+            if (empty($this->query)) {
+                $queryTemplate = "(%s)";
+            } else {
+                $queryTemplate = "$this->query $boolean (%s)";
+                $this->query = '';
+            }
 
-                $column($this);
+            $column($this);
 
-                $this->query = sprintf($queryTemplate, $this->query);
-            });
+            $this->query = sprintf($queryTemplate, $this->query);
+
+            return $this;
         }
 
         if (count(func_get_args()) === 2) {
@@ -42,7 +42,9 @@ final class Jql implements Stringable
 
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
-        return tap($this, fn () => $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean));
+        $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean);
+
+        return $this;
     }
 
     public function orWhere(string|Closure $column, mixed $operator = Operator::EQUALS, mixed $value = null): self
@@ -51,12 +53,14 @@ final class Jql implements Stringable
             [$column, $operator, $value] = [$column, is_array($operator) ? Operator::IN : Operator::EQUALS, $operator];
         }
 
-        return tap($this, fn () => $this->where($column, $operator, $value, Keyword::OR));
+        $this->where($column, $operator, $value, Keyword::OR);
+
+        return $this;
     }
 
     public function when(mixed $value, callable $callback): self
     {
-        $value = value($value, $this);
+        $value = $value instanceof Closure ? $value($this) : $value;
 
         if ($value) {
             return $callback($this, $value) ?: $this;
@@ -67,7 +71,7 @@ final class Jql implements Stringable
 
     public function whenNot(mixed $value, callable $callback): self
     {
-        $value = value($value, $this);
+        $value = $value instanceof Closure ? $value($this) : $value;
 
         if (! $value) {
             return $callback($this, $value) ?: $this;
@@ -78,12 +82,16 @@ final class Jql implements Stringable
 
     public function orderBy(string $column, string $direction): self
     {
-        return tap($this, fn () => $this->appendQuery(Keyword::ORDER_BY." $column $direction"));
+        $this->appendQuery(Keyword::ORDER_BY." $column $direction");
+
+        return $this;
     }
 
     public function rawQuery(string $query): self
     {
-        return tap($this, fn () => $this->appendQuery($query));
+        $this->appendQuery($query);
+
+        return $this;
     }
 
     public function getQuery(): string
@@ -99,13 +107,16 @@ final class Jql implements Stringable
     private function quote(string $operator, mixed $value): string
     {
         if (in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN])) {
-            $values = array_reduce(array_wrap($value), function ($prev, $current) {
-                if ($prev === null) {
-                    return '"'.str_replace('"', '\\"', $current).'"';
-                }
+            $values = array_reduce(
+                is_array($value) ? $value : [$value],
+                function ($prev, $current) {
+                    if ($prev === null) {
+                        return '"'.str_replace('"', '\\"', $current).'"';
+                    }
 
-                return $prev.', "'.str_replace('"', '\\"', $current).'"';
-            });
+                    return $prev.', "'.str_replace('"', '\\"', $current).'"';
+                }
+            );
 
             return "($values)";
         }

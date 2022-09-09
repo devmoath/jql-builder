@@ -45,10 +45,7 @@
     "autoload-dev": {
         "psr-4": {
             "JqlBuilder\\Tests\\": "tests"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
     },
     "extra": {
         "laravel": {
@@ -67,6 +64,7 @@
         "php-cs-fixer": "php-cs-fixer fix --dry-run",
         "php-cs-fixer:fix": "php-cs-fixer fix",
         "phpstan": "phpstan analyse",
+        "phpstan:github": "phpstan analyse --error-format=github",
         "test": "phpunit"
     }
 }

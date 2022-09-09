@@ -1,7 +1,12 @@
 parameters:
-    level: 8
+    level: max
 
     paths:
         - src
 
     ignoreErrors:
+        - '#Parameter \#2 \$operator of method JqlBuilder\\Jql::invalidBooleanOrOperator\(\) expects string, mixed given.#'
+        - '#Parameter \#1 \$operator of method JqlBuilder\\Jql::quote\(\) expects string, mixed given.#'
+        - '#Part \$operator \(mixed\) of encapsed string cannot be cast to string.#'
+        - '#Parameter \#3 \$subject of function str_replace expects array\|string, mixed given.#'
+        - '#Parameter \#2 ...\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given.#'
