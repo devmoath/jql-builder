@@ -5,28 +5,8 @@ on:
     pull_request:
 
 jobs:
-    phpunit:
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: true
-            matrix:
-                php: [ 8.0, 8.1, 8.2 ]
-
-        name: php@${{ matrix.php }}
-
-        steps:
-            -   uses: actions/checkout@v3
-
-            -   name: Setup php
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: ${{ matrix.php }}
-                    extensions: dom, libxml, mbstring
-                    ini-values: error_reporting=E_ALL
-                    coverage: none
-
-            -   name: Install dependencies
-                run: composer install --prefer-dist --no-interaction
-
-            -   name: Run tests
-                run: composer test
+    tests:
+        uses: devmoath/reusable-workflows/.github/workflows/php-tests.yml@master
+        with:
+            php-versions: "['8.0', 8.1, 8.2]"
+            php-extensions: dom, libxml, mbstring

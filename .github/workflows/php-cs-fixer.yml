@@ -2,25 +2,12 @@ name: php-cs-fixer
 
 on:
     push:
-    pull_request:
+        branches:
+            - master
 
 jobs:
     php-cs-fixer:
-        runs-on: ubuntu-latest
-
-        steps:
-            -   uses: actions/checkout@v3
-
-            -   name: Setup php
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: 8.0
-                    extensions: dom, libxml, mbstring
-                    ini-values: error_reporting=E_ALL
-                    coverage: none
-
-            -   name: Install dependencies
-                run: composer install --prefer-dist --no-interaction
-
-            -   name: Run php-cs-fixer
-                run: composer php-cs-fixer
+        uses: devmoath/reusable-workflows/.github/workflows/php-cs-fixer.yml@master
+        with:
+            php-version: 8.1
+            php-extensions: dom, libxml, mbstring
