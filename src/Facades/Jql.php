@@ -20,6 +20,8 @@ class Jql extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'jql';
+        self::clearResolvedInstance(\JqlBuilder\Jql::class);
+
+        return \JqlBuilder\Jql::class;
     }
 }

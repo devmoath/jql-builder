@@ -8,17 +8,10 @@ use Orchestra\Testbench\TestCase;
 
 class LaravelTest extends TestCase
 {
-    protected function getPackageProviders($app): array
-    {
-        return [
-            ServiceProvider::class
-        ];
-    }
-
     protected function getPackageAliases($app): array
     {
         return [
-            'BotMan' => Jql::class,
+            'Jql' => Jql::class,
         ];
     }
 
