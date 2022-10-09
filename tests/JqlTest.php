@@ -130,4 +130,10 @@ class JqlTest extends TestCase
 
         (new Jql())->where('project', '=', ['MY PROJECT']);
     }
+
+    /** @test */
+    public function it_will_qoute_custom_field_that_coontains_spaces(): void
+    {
+        $this->assertEquals('"project name" = "MY PROJECT"', (new Jql())->where('project name', '=', 'MY PROJECT')->getQuery());
+    }
 }

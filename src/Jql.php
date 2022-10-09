@@ -42,7 +42,7 @@ final class Jql implements Stringable
 
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
-        $this->appendQuery("$column $operator {$this->quote($operator, $value)}", $boolean);
+        $this->appendQuery("{$this->escapeSpaces($column)} $operator {$this->quote($operator, $value)}", $boolean);
 
         return $this;
     }
@@ -82,7 +82,7 @@ final class Jql implements Stringable
 
     public function orderBy(string $column, string $direction): self
     {
-        $this->appendQuery(Keyword::ORDER_BY." $column $direction");
+        $this->appendQuery(Keyword::ORDER_BY." {$this->escapeSpaces($column)} $direction");
 
         return $this;
     }
@@ -102,6 +102,15 @@ final class Jql implements Stringable
     public function __toString(): string
     {
         return $this->getQuery();
+    }
+
+    private function escapeSpaces(string $column): string
+    {
+        if (! str_contains($column, ' ')) {
+            return $column;
+        }
+
+        return "\"$column\"";
     }
 
     private function quote(string $operator, mixed $value): string
