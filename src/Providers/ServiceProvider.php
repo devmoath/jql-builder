@@ -8,6 +8,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton('jql', fn () => new Jql());
+        $this->app->bind('jql', fn () => new Jql());
     }
 }

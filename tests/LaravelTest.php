@@ -26,5 +26,6 @@ class LaravelTest extends TestCase
     {
         $this->assertEmpty(Jql::getQuery());
         $this->assertSame(Jql::where('a', '=', 'b')->getQuery(), 'a = "b"');
+        $this->assertSame(Jql::where('c', '=', 'd')->getQuery(), 'c = "d"');
     }
 }
