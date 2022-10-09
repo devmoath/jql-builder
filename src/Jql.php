@@ -40,6 +40,8 @@ final class Jql implements Stringable
             [$column, $operator, $value] = [$column, is_array($operator) ? Operator::IN : Operator::EQUALS, $operator];
         }
 
+        /** @var string $operator */
+
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
         $this->appendQuery("{$this->escapeSpaces($column)} $operator {$this->quote($operator, $value)}", $boolean);
@@ -130,9 +132,10 @@ final class Jql implements Stringable
             return "($values)";
         }
 
-        $value = str_replace('"', '\\"', $value);
+        /** @var string|int $value */
+        $escapedValue = str_replace('"', '\\"', (string) $value);
 
-        return "\"$value\"";
+        return "\"$escapedValue\"";
     }
 
     private function appendQuery(string $query, string $boolean = ''): void
@@ -147,7 +150,7 @@ final class Jql implements Stringable
     /**
      * @throws \InvalidArgumentException
      */
-    private function invalidBooleanOrOperator(mixed $boolean, string $operator, mixed $value): void
+    private function invalidBooleanOrOperator(string $boolean, string $operator, mixed $value): void
     {
         if (! in_array($boolean, [Keyword::AND, Keyword::OR])) {
             throw new InvalidArgumentException(sprintf(
