@@ -130,7 +130,7 @@ final class Jql implements Stringable
             return "($values)";
         }
 
-        $value = str_replace('"', '\\"', $value);
+        $value = str_replace('"', '\\"', (string) $value);
 
         return "\"$value\"";
     }
