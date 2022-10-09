@@ -33,8 +33,7 @@
         "nunomaduro/collision": "^6.0",
         "orchestra/testbench": "^7.0",
         "phpstan/phpstan": "^1.0",
-        "phpunit/phpunit": "^9.5.9",
-        "symfony/var-dumper": "^6.1"
+        "phpunit/phpunit": "^9.5.9"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
