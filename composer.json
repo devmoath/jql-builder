@@ -1,42 +1,30 @@
 {
     "name": "devmoath/jql-builder",
-    "description": "Simple JQL builder for Jira search",
-    "license": "MIT",
-    "type": "library",
+    "description": "JQL builder is a supercharged PHP package that allows you to create Jira Query Language (JQL)",
     "keywords": [
-        "devmoath",
-        "jql-builder",
         "php",
-        "builder",
         "jira",
-        "query-builder",
-        "jql"
+        "sdk",
+        "jql",
+        "builder"
     ],
+    "license": "MIT",
     "authors": [
         {
             "name": "Moath Alhajri",
-            "email": "moath.alhajrii@gmail.com",
-            "role": "Developer"
+            "email": "moath.alhajrii@gmail.com"
         }
     ],
-    "homepage": "https://github.com/devmoath/jql-builder",
-    "support": {
-        "issues": "https://github.com/devmoath/jql-builder/issues",
-        "source": "https://github.com/devmoath/jql-builder"
-    },
     "require": {
         "php": "^8.0",
         "spatie/macroable": "^2.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.1",
-        "nunomaduro/collision": "^6.0",
-        "orchestra/testbench": "^7.0",
-        "phpstan/phpstan": "^1.0",
-        "phpunit/phpunit": "^9.5.9"
+        "laravel/pint": "^1.2.0",
+        "nunomaduro/collision": "^7.0",
+        "pestphp/pest": "^2.0.0",
+        "phpstan/phpstan": "^1.0"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "JqlBuilder\\": "src"
@@ -44,8 +32,28 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "JqlBuilder\\Tests\\": "tests"
+            "Tests\\": "tests/"
         }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "lint": "pint -v --ansi",
+        "test:lint": "pint --test -v --ansi",
+        "test:types": "phpstan analyse --ansi",
+        "test:unit": "pest --colors=always --min=100 --order-by=random --coverage",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:unit"
+        ]
     },
     "extra": {
         "laravel": {
@@ -53,15 +61,5 @@
                 "Jql": "JqlBuilder\\Facades\\Jql"
             }
         }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "scripts": {
-        "php-cs-fixer": "php-cs-fixer fix --dry-run",
-        "php-cs-fixer:fix": "php-cs-fixer fix",
-        "phpstan": "phpstan analyse",
-        "phpstan:github": "phpstan analyse --error-format=github",
-        "test": "phpunit"
     }
 }

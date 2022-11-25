@@ -1,7 +1,7 @@
-/vendor
-/composer.lock
-.DS_Store
-/.idea
-/coverage
-/.php-cs-fixer.cache
+/.idea/
+/node_modules
+/vendor/
 /.phpunit.result.cache
+/package.json
+/composer.lock
+/yarn.lock

@@ -4,8 +4,6 @@
 
 namespace JqlBuilder\Facades;
 
-use Illuminate\Support\Facades\Facade;
-
 /**
  * @method static \JqlBuilder\Jql where(\Closure|string $column, mixed $operator = \JqlBuilder\Operator::EQUALS, mixed $value = null, string $boolean = \JqlBuilder\Keyword::AND)
  * @method static \JqlBuilder\Jql orWhere(\Closure|string $column, mixed $operator = \JqlBuilder\Operator::EQUALS, mixed $value = null)
@@ -14,12 +12,15 @@ use Illuminate\Support\Facades\Facade;
  * @method static \JqlBuilder\Jql orderBy(string $column, string $direction)
  * @method static \JqlBuilder\Jql rawQuery(string $query)
  * @method static string getQuery()
+ *
  * @see \JqlBuilder\Jql
+ * @codeCoverageIgnore
  */
-class Jql extends Facade
+class Jql
 {
     protected static function getFacadeAccessor(): string
     {
+        // @phpstan-ignore-next-line
         self::clearResolvedInstance(\JqlBuilder\Jql::class);
 
         return \JqlBuilder\Jql::class;
