@@ -23,7 +23,7 @@ final class Jql implements Stringable
     ): self {
         if ($column instanceof Closure) {
             if (empty($this->query)) {
-                $queryTemplate = "(%s)";
+                $queryTemplate = '(%s)';
             } else {
                 $queryTemplate = "$this->query $boolean (%s)";
                 $this->query = '';
@@ -41,7 +41,6 @@ final class Jql implements Stringable
         }
 
         /** @var string $operator */
-
         $this->invalidBooleanOrOperator($boolean, $operator, $value);
 
         $this->appendQuery("{$this->escapeSpaces($column)} $operator {$this->quote($operator, $value)}", $boolean);
