@@ -6,13 +6,10 @@ namespace JqlBuilder;
 
 use Closure;
 use InvalidArgumentException;
-use Spatie\Macroable\Macroable;
 use Stringable;
 
 final class Jql implements Stringable
 {
-    use Macroable;
-
     private string $query = '';
 
     public function where(
