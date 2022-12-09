@@ -83,22 +83,6 @@ it('can generate query with grouped conditions', function () {
     expect($actualQueries)->toBe($expectedQueries);
 });
 
-it('can add macro', function () {
-    $builder = new Jql();
-
-    $builder::macro('whereCustom', function (mixed $value) {
-        /** @var Jql $this */
-        return $this->where('custom', '=', $value);
-    });
-
-    /** @noinspection PhpUndefinedMethodInspection */
-    $query = $builder->whereCustom('1')->getQuery();
-
-    $expected = 'custom = "1"';
-
-    expect($query)->toBe($expected);
-});
-
 it('will throw exception when invalid boolean passed', function () {
     (new Jql())->where('project', '=', 'MY PROJECT', '=');
 })->throws(InvalidArgumentException::class, 'Illegal boolean [=] value. only [and, or] is acceptable', 0);
