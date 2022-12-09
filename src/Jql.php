@@ -6,9 +6,8 @@ namespace JqlBuilder;
 
 use Closure;
 use InvalidArgumentException;
-use Stringable;
 
-final class Jql implements Stringable
+final class Jql
 {
     private string $query = '';
 
