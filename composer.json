@@ -54,12 +54,5 @@
             "@test:types",
             "@test:unit"
         ]
-    },
-    "extra": {
-        "laravel": {
-            "aliases": {
-                "Jql": "JqlBuilder\\Facades\\Jql"
-            }
-        }
     }
 }
