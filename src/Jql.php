@@ -18,7 +18,7 @@ final class Jql
         string $boolean = Keyword::AND
     ): self {
         if ($column instanceof Closure) {
-            if (empty($this->query)) {
+            if ($this->getQuery() === '') {
                 $queryTemplate = '(%s)';
             } else {
                 $queryTemplate = "$this->query $boolean (%s)";
@@ -60,7 +60,7 @@ final class Jql
         $value = $value instanceof Closure ? $value($this) : $value;
 
         if ($value) {
-            return $callback($this, $value) ?: $this;
+            return $callback($this, $value) ?? $this;
         }
 
         return $this;
@@ -71,7 +71,7 @@ final class Jql
         $value = $value instanceof Closure ? $value($this) : $value;
 
         if (! $value) {
-            return $callback($this, $value) ?: $this;
+            return $callback($this, $value) ?? $this;
         }
 
         return $this;
@@ -112,7 +112,7 @@ final class Jql
 
     private function quote(string $operator, mixed $value): string
     {
-        if (in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN])) {
+        if (in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN], true)) {
             $values = array_reduce(
                 is_array($value) ? $value : [$value],
                 function ($prev, $current) {
@@ -135,7 +135,7 @@ final class Jql
 
     private function appendQuery(string $query, string $boolean = ''): void
     {
-        if (empty($this->query)) {
+        if ($this->getQuery() === '') {
             $this->query = $query;
         } else {
             $this->query .= ' '.trim("$boolean $query");
@@ -147,7 +147,7 @@ final class Jql
      */
     private function invalidBooleanOrOperator(string $boolean, string $operator, mixed $value): void
     {
-        if (! in_array($boolean, [Keyword::AND, Keyword::OR])) {
+        if (! in_array($boolean, [Keyword::AND, Keyword::OR], true)) {
             throw new InvalidArgumentException(sprintf(
                 'Illegal boolean [%s] value. only [%s, %s] is acceptable',
                 $boolean,
@@ -156,7 +156,7 @@ final class Jql
             ));
         }
 
-        if (! in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN]) && is_array($value)) {
+        if (! in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN], true) && is_array($value)) {
             throw new InvalidArgumentException(sprintf(
                 'Illegal operator [%s] value. only [%s, %s, %s, %s] is acceptable when $value type is array',
                 $operator,
