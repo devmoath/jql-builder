@@ -83,14 +83,6 @@ it('can generate query with grouped conditions', function () {
     expect($actualQueries)->toBe($expectedQueries);
 });
 
-it('will throw exception when invalid boolean passed', function () {
-    (new Jql())->where('project', '=', 'MY PROJECT', '=');
-})->throws(InvalidArgumentException::class, 'Illegal boolean [=] value. only [and, or] is acceptable', 0);
-
-it('will throw exception when invalid operator passed', function () {
-    (new Jql())->where('project', '=', ['MY PROJECT']);
-})->throws(InvalidArgumentException::class, 'Illegal operator [=] value. only [in, not in, was in, was not in] is acceptable when $value type is array', 0);
-
 it('will quote custom field that contains spaces', function () {
     $query = (new Jql())->where('project name', '=', 'MY PROJECT')->getQuery();
 

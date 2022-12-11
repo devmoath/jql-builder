@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace JqlBuilder;
 
 use Closure;
-use InvalidArgumentException;
 use Stringable;
 
 final class Jql implements Stringable
@@ -33,13 +32,15 @@ final class Jql implements Stringable
             return $this;
         }
 
-        if (count(func_get_args()) === 2) {
-            [$column, $operator, $value] = [$column, is_array($operator) ? Operator::IN : Operator::EQUALS, $operator];
+        if (func_num_args() === 2) {
+            $value = $operator;
+            $operator = is_array($operator) ? Operator::IN : Operator::EQUALS;
         }
 
-        /** @var string $operator */
-        $this->invalidBooleanOrOperator($boolean, $operator, $value);
-
+        /**
+         * @var string $column
+         * @var string $operator
+         */
         $this->appendQuery("{$this->escapeSpaces($column)} $operator {$this->quote($operator, $value)}", $boolean);
 
         return $this;
@@ -47,8 +48,9 @@ final class Jql implements Stringable
 
     public function orWhere(string|Closure $column, mixed $operator = Operator::EQUALS, mixed $value = null): self
     {
-        if (count(func_get_args()) === 2) {
-            [$column, $operator, $value] = [$column, is_array($operator) ? Operator::IN : Operator::EQUALS, $operator];
+        if (func_num_args() === 2) {
+            $value = $operator;
+            $operator = is_array($operator) ? Operator::IN : Operator::EQUALS;
         }
 
         $this->where($column, $operator, $value, Keyword::OR);
@@ -116,7 +118,7 @@ final class Jql implements Stringable
         if (in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN], true)) {
             $values = array_reduce(
                 is_array($value) ? $value : [$value],
-                function ($prev, $current) {
+                static function ($prev, $current): string {
                     if ($prev === null) {
                         return '"'.str_replace('"', '\\"', $current).'"';
                     }
@@ -140,32 +142,6 @@ final class Jql implements Stringable
             $this->query = $query;
         } else {
             $this->query .= ' '.trim("$boolean $query");
-        }
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     */
-    private function invalidBooleanOrOperator(string $boolean, string $operator, mixed $value): void
-    {
-        if (! in_array($boolean, [Keyword::AND, Keyword::OR], true)) {
-            throw new InvalidArgumentException(sprintf(
-                'Illegal boolean [%s] value. only [%s, %s] is acceptable',
-                $boolean,
-                Keyword::AND,
-                Keyword::OR
-            ));
-        }
-
-        if (! in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN], true) && is_array($value)) {
-            throw new InvalidArgumentException(sprintf(
-                'Illegal operator [%s] value. only [%s, %s, %s, %s] is acceptable when $value type is array',
-                $operator,
-                Operator::IN,
-                Operator::NOT_IN,
-                Operator::WAS_IN,
-                Operator::WAS_NOT_IN,
-            ));
         }
     }
 }
