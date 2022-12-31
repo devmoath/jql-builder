@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/devmoath/jql-builder/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/workflow/status/devmoath/jql-builder/Tests/master"></a>
+    <a href="https://github.com/devmoath/jql-builder/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/devmoath/jql-builder/tests.yml?branch=1.x"></a>
     <a href="https://packagist.org/packages/devmoath/jql-builder"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/devmoath/jql-builder"></a>
     <a href="https://packagist.org/packages/devmoath/jql-builder"><img alt="Latest Version" src="https://img.shields.io/packagist/v/devmoath/jql-builder"></a>
     <a href="https://packagist.org/packages/devmoath/jql-builder"><img alt="License" src="https://img.shields.io/github/license/devmoath/jql-builder"></a>
