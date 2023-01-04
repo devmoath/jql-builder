@@ -18,4 +18,15 @@ final class Keyword
     public const NULL = 'null';
 
     public const ORDER_BY = 'order by';
+
+    /**
+     * @return string[]
+     */
+    public static function booleans(): array
+    {
+        return [
+            self::AND,
+            self::OR,
+        ];
+    }
 }

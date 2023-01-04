@@ -114,3 +114,15 @@ it('will throw exception when invalid boolean passed', function () {
 it('will throw exception when invalid operator passed', function () {
     (new Jql())->where('project', '=', ['MY PROJECT']);
 })->throws(InvalidArgumentException::class, 'Illegal operator [=] value. only [in, not in, was in, was not in] is acceptable when $value type is array');
+
+it('can reset the current query', function () {
+    $query = new Jql();
+
+    $query->where('project', 'name');
+
+    expect($query)->getQuery()->toBe('project = "name"');
+
+    $query->reset();
+
+    expect($query)->getQuery()->toBeEmpty();
+});

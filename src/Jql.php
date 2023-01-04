@@ -95,6 +95,13 @@ final class Jql implements Stringable
         return $this;
     }
 
+    public function reset(): self
+    {
+        $this->query = '';
+
+        return $this;
+    }
+
     public function getQuery(): string
     {
         return trim($this->query);
@@ -147,27 +154,23 @@ final class Jql implements Stringable
     }
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function invalidBooleanOrOperator(string $boolean, string $operator, mixed $value): void
     {
-        if (! in_array($boolean, [Keyword::AND, Keyword::OR], true)) {
+        if (! in_array($boolean, Keyword::booleans(), true)) {
             throw new InvalidArgumentException(sprintf(
                 'Illegal boolean [%s] value. only [%s, %s] is acceptable',
                 $boolean,
-                Keyword::AND,
-                Keyword::OR
+                ...Keyword::booleans(),
             ));
         }
 
-        if (! in_array($operator, [Operator::IN, Operator::NOT_IN, Operator::WAS_IN, Operator::WAS_NOT_IN], true) && is_array($value)) {
+        if (is_array($value) && ! in_array($operator, Operator::acceptList(), true)) {
             throw new InvalidArgumentException(sprintf(
                 'Illegal operator [%s] value. only [%s, %s, %s, %s] is acceptable when $value type is array',
                 $operator,
-                Operator::IN,
-                Operator::NOT_IN,
-                Operator::WAS_IN,
-                Operator::WAS_NOT_IN,
+                ...Operator::acceptList(),
             ));
         }
     }

@@ -40,4 +40,17 @@ final class Operator
     public const WAS_NOT = 'was not';
 
     public const CHANGED = 'changed';
+
+    /**
+     * @return string[]
+     */
+    public static function acceptList(): array
+    {
+        return [
+            self::IN,
+            self::NOT_IN,
+            self::WAS_IN,
+            self::WAS_NOT_IN,
+        ];
+    }
 }
