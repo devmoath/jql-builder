@@ -96,6 +96,14 @@ echo $query;
 // 'summary = "value"'
 ```
 
----
+## Contributing
+
+Thank you for considering contributing to the JQL Builder! The contribution guide can be found in the [CONTRIBUTING](CONTRIBUTING.md).
+
+## Security Vulnerabilities
+
+If you discover any security-related issues, please email moath.alhajrii@gmail.com instead of using the issue tracker.
+
+## License
 
 JQL builder is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
